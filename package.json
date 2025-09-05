@@ -1,0 +1,11 @@
+{
+  "name": "netlify-shop",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "node generate-sitemap.js && echo 'Build complete'" 
+  },
+  "dependencies": {
+    "firebase-admin": "^10.0.0",
+    "dotenv": "^16.0.0" //ローカルテスト用に
+  }
+}

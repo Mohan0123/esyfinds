@@ -1,0 +1,21 @@
+# netlify.toml (अंतिम और सही संस्करण)
+
+[build]
+  functions = "netlify/functions"
+
+# नियम 1: सबसे खास नियम (Specific Rule) सबसे पहले।
+# यह SEO के लिए सर्वर-साइड रेंडरिंग को संभालता है।
+# यह /shop/v-shakti जैसे URL को आपके फंक्शन पर भेजेगा।
+[[redirects]]
+  from = "/shop/:slug"
+  to = "/.netlify/functions/seo-handler?slug=:slug"
+  status = 200
+  force = true # यह सुनिश्चित करेगा कि यह नियम हमेशा चले
+
+# नियम 2: "कैच-ऑल" नियम (Catch-All Rule) आखिर में।
+# यह नियम आपके Single Page App (SPA) के लिए बहुत ज़रूरी है।
+# यह किसी भी ऐसे URL को जो किसी फ़ाइल से मेल नहीं खाता, उसे index.html पर भेज देता है।
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

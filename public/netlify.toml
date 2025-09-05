@@ -1,0 +1,8 @@
+
+  [build]
+  functions = "netlify/functions"
+
+[[redirects]]
+  from = "/shop/:slug"
+  to = "/.netlify/functions/seo-handler?slug=:slug"
+  status = 200
