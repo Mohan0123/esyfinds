@@ -438,10 +438,12 @@
         loadAds();
         document.getElementById('app').innerHTML = getSkeleton();
         try {
+            // FIX: Mene yahan se 'limit(50)' hata diya hai. Ab sari movies load hongi.
             const [m, s] = await Promise.all([
-                getDocs(query(collection(db, 'movies'), where('isPublic', '==', true), limit(50))),
-                getDocs(query(collection(db, 'series'), where('isPublic', '==', true), limit(50)))
+                getDocs(query(collection(db, 'movies'), where('isPublic', '==', true))),
+                getDocs(query(collection(db, 'series'), where('isPublic', '==', true)))
             ]);
+            
             allContent = [
                 ...m.docs.map(d => ({id:d.id, ...d.data(), type:'movie'})), 
                 ...s.docs.map(d => ({id:d.id, ...d.data(), type:'series'}))
