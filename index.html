@@ -392,7 +392,6 @@
     window.onpopstate = handleLocation;
 
     async function handleLocation() {
-        // --- TRACKING HOOK (Starts tracking on every route change) ---
         trackPageActivity(); 
 
         const path = window.location.pathname;
@@ -406,15 +405,29 @@
             window.history.replaceState({}, "", window.location.pathname.slice(0, -1));
         }
 
-        if (parts.length === 0 || path === '/index.html') { renderHome(); return; }
+        // --- STEP 1: Check Home (Strong Check) ---
+        // Agar URL khali hai ya index.html hai, to Home dikhao
+        if (parts.length === 0 || path === '/index.html' || path === '/') { 
+            renderHome(); 
+            return; 
+        }
+
+        // --- STEP 2: Check Static Routes ---
         if (parts[0] === 'movies') { renderHome('movie'); return; }
         if (parts[0] === 'series') { renderHome('series'); return; }
 
+        // --- STEP 3: Find Item ---
         const slug = parts[0];
         const item = allContent.find(i => createSlug(i.name) === slug);
 
-        if (!item) { renderHome(); return; }
+        // --- STEP 4: 404 ERROR CHECK (Ye line sabse jaruri hai) ---
+        // Agar item nahi mila, to renderHome() NAHI balki render404() chalana hai
+        if (!item) { 
+            render404(); 
+            return; 
+        }
 
+        // --- STEP 5: Render Content ---
         if (item.type === 'series') {
             if (parts.length === 1) renderSeriesLanding(slug);
             else if (parts.length === 2 && parts[1].startsWith('episode-')) {
@@ -428,7 +441,24 @@
     }
 
     const getSkeleton = () => `<div class="px-4 lg:px-8 py-8 max-w-[1600px] mx-auto"><div class="w-full h-[40vh] md:h-[50vh] bg-[#141414] rounded-2xl animate-pulse mb-10"></div><div class="grid grid-cols-2 md:grid-cols-3 gap-4">${Array(6).fill(0).map(() => `<div class="aspect-video bg-[#141414] rounded-xl animate-pulse"></div>`).join('')}</div></div>`;
-
+    function render404() {
+        updateSEO({ 
+            title: "Page Not Found - Ranginx", 
+            desc: "The content you are looking for does not exist.",
+            robots: "noindex, nofollow" 
+        });
+        
+        document.getElementById('app').innerHTML = `
+            <div class="min-h-screen flex flex-col items-center justify-center text-center px-4">
+                <h1 class="text-6xl font-bold text-brand mb-4">404</h1>
+                <p class="text-xl text-gray-300 mb-8">Oops! We couldn't find that series or movie.</p>
+                <a href="/" onclick="route(event)" class="bg-white text-black px-6 py-3 rounded-lg font-bold hover:bg-gray-200 transition">
+                    Go Back Home
+                </a>
+            </div>
+            ${getFooter()}
+        `;
+    }
     async function init() {
         loadAds();
         document.getElementById('app').innerHTML = getSkeleton();
