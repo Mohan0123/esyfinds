@@ -5,12 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self';">
     <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
-     
+    <base href="/"> 
     
     <title>Ranginx – Watch 18+ Web Series & Movies Online</title>
     <meta name="description" content="Watch latest HD web series and movies online. Free streaming on Ranginx.">
     <meta name="robots" content="index, follow">
-    
     
     <meta name="rating" content="RTA-5042-1996-1400-1577-RTA" />
     <meta name="adult" content="true" />
@@ -184,51 +183,40 @@
     let allContent = [];
     let ads = {};
 
-    // --- ADSENSE SAFE & ANALYTICS RULES (UPDATED) ---
+    // --- ADSENSE SAFE & ANALYTICS RULES ---
     function isAnalyticsSafe() {
         const userAgent = navigator.userAgent.toLowerCase();
         const path = location.pathname;
-
-        // Rule 1: Exclude Internal/Admin Pages
         const restrictedPaths = ['/admin', '/login', '/dashboard', '/editor', '/sitemap.xml'];
         if (restrictedPaths.some(p => path.startsWith(p))) return false;
-
-        // Rule 2: Prevent Bot/Crawler Tracking
         const botPatterns = ['bot', 'crawler', 'spider', 'googlebot', 'bingbot', 'slurp', 'duckduckbot', 'baiduspider', 'yandexbot'];
         if (botPatterns.some(bot => userAgent.includes(bot))) return false;
-
-        // Rule 3: Check for WebDriver
         if (navigator.webdriver) return false;
-
         return true;
     }
 
     function incrementViewSafe(collectionName, docId, uniqueKey) {
         if (!isAnalyticsSafe()) return;
-
         try {
-            const sessionKey = `viewed_${uniqueKey}`; // Unique per page per session
+            const sessionKey = `viewed_${uniqueKey}`; 
             if (!sessionStorage.getItem(sessionKey)) {
-                // Only count if not viewed in this session
                 updateDoc(doc(db, collectionName, docId), { views: increment(1) }).catch(console.error);
                 sessionStorage.setItem(sessionKey, '1');
             }
         } catch (e) { }
     }
 
-    // --- TRACKING MODULE (Views & Time) ---
+    // --- TRACKING MODULE ---
     let currentTrackId = null;
     let trackStartTime = Date.now();
-    // --- UPDATED TRACKING MODULE (Fix: Sends Page Title to Admin) ---
+    
     async function trackPageActivity() {
         if (!isAnalyticsSafe()) return;
 
-        // 1. Calculate Date Strings
         const now = new Date();
         const dateStr = now.toISOString().split('T')[0];
         const monthStr = dateStr.slice(0, 7);
 
-        // 2. SAVE PREVIOUS PAGE TIME (Validation: 3s to 3600s)
         if (currentTrackId) {
             const timeSpentMs = Date.now() - trackStartTime;
             const timeSpentSeconds = Math.round(timeSpentMs / 1000);
@@ -236,7 +224,6 @@
             if (timeSpentSeconds >= 3 && timeSpentSeconds <= 3600) {
                 const validTimeMs = timeSpentSeconds * 1000; 
                 try {
-                    // Update Time Stats
                     updateDoc(doc(db, "pageStats", currentTrackId), { totalTime: increment(validTimeMs) }).catch(()=>{});
                     setDoc(doc(db, "pageStatsDaily", `${dateStr}_${currentTrackId}`), { pageId: currentTrackId, date: dateStr, totalTime: increment(validTimeMs) }, { merge: true }).catch(()=>{});
                     setDoc(doc(db, "pageStatsMonthly", `${monthStr}_${currentTrackId}`), { pageId: currentTrackId, month: monthStr, totalTime: increment(validTimeMs) }, { merge: true }).catch(()=>{});
@@ -244,44 +231,38 @@
             }
         }
 
-        // 3. IDENTIFY NEW PAGE ID & TITLE
         const path = window.location.pathname;
         const parts = path.split('/').filter(p => p);
         
         let newId = 'home';
-        let pageTitle = 'Home Page'; // Default Title
+        let pageTitle = 'Home Page';
 
         if (parts.length > 0 && parts[0] !== 'movies' && parts[0] !== 'series') {
             const slug = parts[0];
             const item = allContent.find(i => createSlug(i.name) === slug);
             if (item) {
-                pageTitle = item.name; // Set Title from Content
-                
+                pageTitle = item.name;
                 if (item.type === 'movie') {
                     newId = `movie_${slug}`;
                 } else if (item.type === 'series') {
                     if (parts[1]?.startsWith('episode-')) {
-                         const epNum = parts[1].replace('episode-', '');
-                         newId = `episode_${slug}_${epNum}`;
-                         pageTitle = `${item.name} - Ep ${epNum}`; // Detailed Title for Episodes
+                            const epNum = parts[1].replace('episode-', '');
+                            newId = `episode_${slug}_${epNum}`;
+                            pageTitle = `${item.name} - Ep ${epNum}`;
                     } else {
-                         newId = `series_${slug}`;
+                            newId = `series_${slug}`;
                     }
                 }
             } else {
-                // If page not found in content list (e.g. static pages)
                 newId = `page_${slug}`;
                 pageTitle = slug.charAt(0).toUpperCase() + slug.slice(1);
             }
         }
 
-        // 4. RECORD VIEW (With Title)
         const sessionViewKey = `analytics_${newId}`;
         if (!sessionStorage.getItem(sessionViewKey)) {
             try {
                 sessionStorage.setItem(sessionViewKey, '1');
-                
-                // FIX: Added 'title: pageTitle' to all database updates
                 setDoc(doc(db, "pageStats", newId), { 
                     views: increment(1), 
                     lastVisit: serverTimestamp(),
@@ -308,43 +289,34 @@
         trackStartTime = Date.now();
     }
 
-
-    // Handle Time on Tab Close/Unload
     window.addEventListener("beforeunload", () => {
         if (currentTrackId && isAnalyticsSafe()) {
             const timeSpentSeconds = Math.round((Date.now() - trackStartTime) / 1000);
             if (timeSpentSeconds >= 3 && timeSpentSeconds <= 3600) {
-                // Use sendBeacon for reliable unload data sending if you had an API, 
-                // but for Firebase direct SDK, we try a final update (best effort)
-                // Note: Firebase SDK doesn't support sendBeacon directly for Firestore operations easily on unload.
-                // We rely on the SPA route change logic mostly, but this catches refresh/close best effort.
+                 // Best effort handling
             }
         }
     });
 
-    // --- END TRACKING MODULE ---
-
+    // --- SEO UPDATER ---
     function updateSEO(meta) {
         document.title = meta.title;
 
-        // Meta Description
         let descMeta = document.querySelector('meta[name="description"]');
         if (!descMeta) { descMeta = document.createElement('meta'); descMeta.setAttribute('name', 'description'); document.head.appendChild(descMeta); }
         descMeta.setAttribute("content", meta.desc);
 
-        // Meta Robots (CRITICAL FOR ADMIN CONTROL)
         let robotsMeta = document.querySelector('meta[name="robots"]');
         if (!robotsMeta) { robotsMeta = document.createElement('meta'); robotsMeta.setAttribute('name', 'robots'); document.head.appendChild(robotsMeta); }
         robotsMeta.setAttribute("content", meta.robots || "index, follow");
 
-        // Keywords
         let kwMeta = document.querySelector('meta[name="keywords"]');
         if (meta.keywords && meta.keywords.length > 0) {
             if (!kwMeta) { kwMeta = document.createElement('meta'); kwMeta.setAttribute('name', 'keywords'); document.head.appendChild(kwMeta); }
             kwMeta.setAttribute("content", Array.isArray(meta.keywords) ? meta.keywords.join(', ') : meta.keywords);
         } else if (kwMeta) kwMeta.remove();
 
-        // Canonical
+        // FIX: Correct Canonical Logic (removes extra slashes)
         let canonicalUrl = meta.url || `https://ranginx.fun${window.location.pathname}`;
         if (canonicalUrl.endsWith('/') && canonicalUrl !== 'https://ranginx.fun/') canonicalUrl = canonicalUrl.slice(0, -1);
         
@@ -352,7 +324,6 @@
         if(!linkCanon) { linkCanon = document.createElement('link'); linkCanon.setAttribute('rel', 'canonical'); document.head.appendChild(linkCanon); }
         linkCanon.setAttribute("href", canonicalUrl);
 
-        // Open Graph
         const setMeta = (selector, attr, value) => {
             let el = document.querySelector(selector);
             if (!el) { el = document.createElement('meta'); if(selector.includes('property')) el.setAttribute('property', selector.split('"')[1]); if(selector.includes('name')) el.setAttribute('name', selector.split('"')[1]); document.head.appendChild(el); }
@@ -369,12 +340,10 @@
         setMeta('meta[name="twitter:description"]', 'content', meta.desc);
         if (meta.image) setMeta('meta[name="twitter:image"]', 'content', meta.image);
 
-        // Schema
         const schemaData = { "@context": "https://schema.org", "@graph": [ { "@type": "WebSite", "name": "Ranginx", "url": "https://ranginx.fun/" }, ...(Array.isArray(meta.schema) ? meta.schema : (meta.schema ? [meta.schema] : [])) ] };
         document.getElementById('schema-json').textContent = JSON.stringify(schemaData);
     }
 
-    // --- CONTENT GENERATORS ---
     function generateFallbackSeoContent(item) {
         const safeName = item.name.replace(/</g, "&lt;").replace(/>/g, "&gt;");
         return `
@@ -396,8 +365,8 @@
     window.route = (event) => { event = event || window.event; event.preventDefault(); window.history.pushState({}, "", event.currentTarget.href); handleLocation(); };
     window.onpopstate = handleLocation;
 
+    // --- MAIN ROUTING LOGIC (PERFECTED) ---
     async function handleLocation() {
-        // --- TRACKING HOOK (Starts tracking on every route change) ---
         trackPageActivity(); 
 
         const path = window.location.pathname;
@@ -411,15 +380,24 @@
             window.history.replaceState({}, "", window.location.pathname.slice(0, -1));
         }
 
-        if (parts.length === 0 || path === '/index.html') { renderHome(); return; }
+        // STEP 1: Check Home
+        if (parts.length === 0 || path === '/index.html' || path === '/') { renderHome(); return; }
+        
+        // STEP 2: Check Static Routes
         if (parts[0] === 'movies') { renderHome('movie'); return; }
         if (parts[0] === 'series') { renderHome('series'); return; }
 
+        // STEP 3: Find Item
         const slug = parts[0];
         const item = allContent.find(i => createSlug(i.name) === slug);
 
-        if (!item) { renderHome(); return; }
+        // STEP 4: 404 CHECK (FIX: Renders 404 page instead of Home)
+        if (!item) { 
+            render404(); 
+            return; 
+        }
 
+        // STEP 5: Render Content
         if (item.type === 'series') {
             if (parts.length === 1) renderSeriesLanding(slug);
             else if (parts.length === 2 && parts[1].startsWith('episode-')) {
@@ -438,12 +416,11 @@
         loadAds();
         document.getElementById('app').innerHTML = getSkeleton();
         try {
-            // FIX: Mene yahan se 'limit(50)' hata diya hai. Ab sari movies load hongi.
+            // FIX: Removed 'limit(50)' so ALL movies load. No more 404s for older posts.
             const [m, s] = await Promise.all([
                 getDocs(query(collection(db, 'movies'), where('isPublic', '==', true))),
                 getDocs(query(collection(db, 'series'), where('isPublic', '==', true)))
             ]);
-            
             allContent = [
                 ...m.docs.map(d => ({id:d.id, ...d.data(), type:'movie'})), 
                 ...s.docs.map(d => ({id:d.id, ...d.data(), type:'series'}))
@@ -451,6 +428,26 @@
             
             handleLocation();
         } catch(e) { console.error(e); }
+    }
+
+    // --- NEW 404 RENDER FUNCTION (ADDED) ---
+    function render404() {
+        updateSEO({ 
+            title: "Page Not Found - Ranginx", 
+            desc: "The content you are looking for does not exist.",
+            robots: "noindex, nofollow" 
+        });
+        
+        document.getElementById('app').innerHTML = `
+            <div class="min-h-screen flex flex-col items-center justify-center text-center px-4">
+                <h1 class="text-6xl font-bold text-brand mb-4">404</h1>
+                <p class="text-xl text-gray-300 mb-8">Oops! We couldn't find that series or movie.</p>
+                <a href="/" onclick="route(event)" class="bg-white text-black px-6 py-3 rounded-lg font-bold hover:bg-gray-200 transition">
+                    Go Back Home
+                </a>
+            </div>
+            ${getFooter()}
+        `;
     }
 
     function renderHome(filterType = null) {
@@ -525,7 +522,7 @@
 
     function renderSeriesLanding(slug) {
         const item = allContent.find(i => createSlug(i.name) === slug);
-        if(!item) return renderHome();
+        if(!item) return render404(); 
 
         const pageUrl = `https://ranginx.fun/${slug}`;
         
@@ -596,7 +593,7 @@
 
     function renderPlayer(slug, urlEpIndex = null) {
         const item = allContent.find(i => createSlug(i.name) === slug);
-        if(!item) return renderHome();
+        if(!item) return render404(); 
 
         let activeIndex = 0;
         const isSeries = item.type === 'series';
@@ -725,7 +722,8 @@
         } else el.innerHTML = code;
     }
     
-    const getFooter = () => `
+    function getFooter() {
+        return `
         <footer class="bg-[#050505] border-t border-[#1a1a1a] pt-16 pb-10 mt-12">
             <div class="max-w-[1400px] mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-10">
                 <div class="col-span-2 md:col-span-1"><h3 class="text-white font-bold text-xl mb-4 tracking-tight">Ranginx</h3><p class="text-gray-500 text-sm leading-relaxed">The best place to watch movies and web series for free in HD quality. No registration required.</p></div>
@@ -735,6 +733,7 @@
             <div class="text-center pt-8 border-t border-[#1a1a1a] mt-10 text-[11px] text-[#444]">&copy; 2025 Ranginx. All rights reserved.</div>
         </footer>
     `;
+    }
 
     function createSlug(name) { return name.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-'); }
     window.toggleSidebar = () => { const sb = document.getElementById('sidebar'); document.getElementById('overlay').classList.toggle('hidden'); sb.classList.toggle('-translate-x-full'); };
