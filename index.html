@@ -217,6 +217,7 @@
         const dateStr = now.toISOString().split('T')[0];
         const monthStr = dateStr.slice(0, 7);
 
+        // Previous page time calculation
         if (currentTrackId) {
             const timeSpentMs = Date.now() - trackStartTime;
             const timeSpentSeconds = Math.round(timeSpentMs / 1000);
@@ -367,8 +368,8 @@
 
     // --- MAIN ROUTING LOGIC (PERFECTED) ---
     async function handleLocation() {
-        trackPageActivity(); 
-
+        // FIX: Removed trackPageActivity() from here to prevent early tracking bug
+        
         const path = window.location.pathname;
         const parts = path.split('/').filter(p => p);
         
@@ -394,6 +395,7 @@
         // STEP 4: 404 CHECK (FIX: Renders 404 page instead of Home)
         if (!item) { 
             render404(); 
+            // Note: render404 does NOT call trackPageActivity, effectively ignoring junk pages.
             return; 
         }
 
@@ -518,6 +520,9 @@
         document.getElementById('app').innerHTML = html;
         lucide.createIcons();
         setTimeout(() => { if(ads.globalFooter) for(let i=0; i<adCount; i++) renderAd(`feed-ad-${i}`, ads.globalFooter); }, 500);
+
+        // FIX: Track activity ONLY after Home page is successfully rendered
+        trackPageActivity();
     }
 
     function renderSeriesLanding(slug) {
@@ -589,6 +594,9 @@
             </div>${getFooter()}`;
         document.getElementById('app').innerHTML = html;
         lucide.createIcons();
+
+        // FIX: Track activity ONLY after Series Landing page is successfully rendered
+        trackPageActivity();
     }
 
     function renderPlayer(slug, urlEpIndex = null) {
@@ -694,6 +702,9 @@
         document.getElementById('app').innerHTML = html;
         lucide.createIcons();
         if(ads) { renderAd('player-ad-top', ads.playerHeader || ads.globalHeader); renderAd('player-ad-bot', ads.playerFooter || ads.globalFooter); }
+
+        // FIX: Track activity ONLY after Player is successfully rendered
+        trackPageActivity();
     }
 
     window.openModal = (type) => {
