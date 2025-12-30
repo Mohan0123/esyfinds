@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ranginx Admin Pro</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <style>
+        body{background:#0b1121;color:#e2e8f0;font-family:sans-serif} 
+        .custom-scroll::-webkit-scrollbar { width: 6px; } 
+        .custom-scroll::-webkit-scrollbar-track { background: #1e293b; }
+        .custom-scroll::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+        .custom-scroll::-webkit-scrollbar-thumb:hover { background: #64748b; }
+        .glass-panel { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
+        .animate-fade { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <div id="auth-screen" class="fixed inset-0 z-50 flex items-center justify-center bg-[#0b1121]">
+        <div class="glass-panel p-8 rounded-2xl w-full max-w-sm shadow-2xl">
+            <div class="text-center mb-8">
+                <h2 class="text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">Ranginx Admin</h2>
+                <p class="text-gray-500 text-sm mt-2">Secure Access Panel</p>
+            </div>
+            <form id="login-form" class="space-y-5">
+                <div><input type="email" id="email" placeholder="admin@ranginx.fun" class="w-full p-3 bg-[#1e293b] rounded-lg border border-slate-700 focus:border-purple-500 outline-none transition text-white" required></div>
+                <div><input type="password" id="password" placeholder="Password" class="w-full p-3 bg-[#1e293b] rounded-lg border border-slate-700 focus:border-purple-500 outline-none transition text-white" required></div>
+                <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-pink-600 p-3 rounded-lg font-bold text-white hover:opacity-90 transition shadow-lg shadow-purple-900/30">Enter Dashboard</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="dashboard" class="hidden max-w-7xl mx-auto p-4 md:p-6">
+        
+        <header class="flex flex-col md:flex-row justify-between items-center gap-4 mb-8 glass-panel p-4 rounded-xl">
+            <div class="flex items-center gap-3">
+                <div class="h-10 w-10 bg-purple-600 rounded-lg flex items-center justify-center font-bold text-xl text-white">R</div>
+                <h1 class="text-xl font-bold text-white">Admin Console</h1>
+            </div>
+            <div class="flex items-center gap-3 w-full md:w-auto">
+                <div class="relative w-full md:w-80">
+                    <i data-lucide="search" class="absolute left-3 top-3 w-4 h-4 text-gray-500"></i>
+                    <input type="text" id="global-search" placeholder="Search content..." class="w-full pl-10 pr-4 py-2.5 bg-[#1e293b] border border-slate-700 rounded-lg text-sm focus:border-purple-500 outline-none transition text-white" onkeyup="handleSearch(this.value)">
+                </div>
+                <button id="logout-btn" class="p-2.5 bg-red-500/10 text-red-400 border border-red-500/20 rounded-lg hover:bg-red-500/20 transition"><i data-lucide="log-out" class="w-5 h-5"></i></button>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+            <div class="glass-panel p-4 rounded-xl border-l-4 border-purple-500">
+                <span class="text-xs text-gray-400 uppercase font-bold">Movies</span>
+                <div class="text-2xl font-bold mt-1 text-white" id="stat-movies">0</div>
+            </div>
+            <div class="glass-panel p-4 rounded-xl border-l-4 border-pink-500">
+                <span class="text-xs text-gray-400 uppercase font-bold">Series</span>
+                <div class="text-2xl font-bold mt-1 text-white" id="stat-series">0</div>
+            </div>
+             <div class="glass-panel p-4 rounded-xl border-l-4 border-cyan-500">
+                <span class="text-xs text-gray-400 uppercase font-bold">Live Pages</span>
+                <div class="text-2xl font-bold mt-1 text-cyan-400" id="stat-pages">-</div>
+            </div>
+            <div class="glass-panel p-4 rounded-xl border-l-4 border-yellow-500 cursor-pointer hover:bg-slate-800 transition" onclick="openAdsModal()">
+                <span class="text-xs text-gray-400 uppercase font-bold">Monetization</span>
+                <div class="text-md font-bold mt-2 text-yellow-400 flex items-center gap-2"><i data-lucide="settings" class="w-4 h-4"></i> Manage Ads</div>
+            </div>
+        </div>
+
+        <div class="flex flex-wrap gap-3 mb-6">
+            <button onclick="switchTab('movies')" id="tab-movies" class="px-5 py-2.5 rounded-lg font-bold transition flex items-center gap-2 bg-purple-600 shadow-lg border border-purple-500 text-white"><i data-lucide="film" class="w-4 h-4"></i> Movies</button>
+            <button onclick="switchTab('series')" id="tab-series" class="px-5 py-2.5 rounded-lg text-gray-400 hover:bg-slate-800 transition flex items-center gap-2 border border-transparent hover:border-slate-700"><i data-lucide="tv" class="w-4 h-4"></i> Web Series</button>
+            <button onclick="switchTab('pages')" id="tab-pages" class="px-5 py-2.5 rounded-lg text-gray-400 hover:bg-slate-800 transition flex items-center gap-2 border border-transparent hover:border-slate-700"><i data-lucide="file-text" class="w-4 h-4"></i> Pages (SEO)</button>
+            <button onclick="switchTab('analytics')" id="tab-analytics" class="px-5 py-2.5 rounded-lg text-gray-400 hover:bg-slate-800 transition flex items-center gap-2 border border-transparent hover:border-slate-700"><i data-lucide="bar-chart-2" class="w-4 h-4"></i> Analytics</button>
+            
+            <div class="flex-grow"></div>
+            
+            <button onclick="openModal()" id="main-add-btn" class="bg-gradient-to-r from-emerald-500 to-emerald-700 text-white px-6 py-2.5 rounded-lg font-bold hover:opacity-90 transition flex items-center gap-2 shadow-lg shadow-emerald-900/30">
+                <i data-lucide="plus-circle" class="w-5 h-5"></i> <span id="add-btn-text">Add Content</span>
+            </button>
+        </div>
+
+        <div id="standard-view" class="glass-panel rounded-xl overflow-hidden min-h-[500px]">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                    <thead class="bg-[#1e293b]/50 text-xs uppercase text-gray-400 border-b border-slate-700">
+                        <tr id="table-header"></tr>
+                    </thead>
+                    <tbody id="content-list" class="divide-y divide-slate-700/50 text-sm"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="analytics-view" class="hidden animate-fade">
+            <div class="flex flex-wrap gap-2 mb-6 p-1 bg-[#1e293b] w-fit rounded-lg border border-slate-700">
+                <button onclick="loadAnalytics('today')" id="btn-today" class="filter-btn px-4 py-1.5 rounded-md text-sm font-bold transition text-gray-400 hover:text-white">Today</button>
+                <button onclick="loadAnalytics('yesterday')" id="btn-yesterday" class="filter-btn px-4 py-1.5 rounded-md text-sm font-bold transition text-gray-400 hover:text-white">Yesterday</button>
+                <button onclick="loadAnalytics('week')" id="btn-week" class="filter-btn px-4 py-1.5 rounded-md text-sm font-bold transition text-gray-400 hover:text-white">Past 7 Days</button>
+                <button onclick="loadAnalytics('month')" id="btn-month" class="filter-btn px-4 py-1.5 rounded-md text-sm font-bold transition text-gray-400 hover:text-white">This Month</button>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                <div class="bg-slate-800/50 p-5 rounded-xl border border-slate-700">
+                    <div class="text-xs text-blue-400 font-bold uppercase mb-1">Total Views</div>
+                    <div id="card-views" class="text-2xl font-bold text-white">-</div>
+                </div>
+                <div class="bg-slate-800/50 p-5 rounded-xl border border-slate-700">
+                    <div class="text-xs text-emerald-400 font-bold uppercase mb-1">Pages Tracked</div>
+                    <div id="card-pages" class="text-2xl font-bold text-white">-</div>
+                </div>
+                <div class="bg-slate-800/50 p-5 rounded-xl border border-slate-700">
+                    <div class="text-xs text-orange-400 font-bold uppercase mb-1">Avg Time</div>
+                    <div id="card-time" class="text-2xl font-bold text-white">-</div>
+                </div>
+                <div class="bg-slate-800/50 p-5 rounded-xl border border-slate-700">
+                    <div class="text-xs text-purple-400 font-bold uppercase mb-1">Top Performer</div>
+                    <div id="card-top" class="text-sm font-bold text-white truncate leading-8">-</div>
+                </div>
+            </div>
+
+            <div class="glass-panel rounded-xl overflow-hidden border border-slate-700">
+                <div class="p-4 border-b border-slate-700 bg-slate-900/50 flex justify-between items-center">
+                    <h3 class="font-bold text-white flex items-center gap-2"><i data-lucide="trophy" class="w-4 h-4 text-yellow-500"></i> Top 20 Pages</h3>
+                    <span id="date-label" class="text-xs text-gray-500 font-mono">Live Data</span>
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left">
+                        <thead class="bg-slate-900/50 text-xs uppercase text-gray-500">
+                            <tr>
+                                <th class="p-4 w-16 text-center">#</th>
+                                <th class="p-4">Page Name</th>
+                                <th class="p-4 text-right cursor-pointer hover:text-white" onclick="sortAnalytics('views')">Views ▾</th>
+                                <th class="p-4 text-right cursor-pointer hover:text-white" onclick="sortAnalytics('time')">Avg Time</th>
+                                <th class="p-4 text-right hidden md:table-cell">Engagement</th>
+                            </tr>
+                        </thead>
+                        <tbody id="analytics-list" class="divide-y divide-slate-800 text-sm"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="modal" class="fixed inset-0 bg-black/90 z-[60] hidden flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-[#1e293b] w-full max-w-5xl rounded-2xl border border-slate-700 max-h-[95vh] overflow-y-auto shadow-2xl custom-scroll">
+            <div class="sticky top-0 bg-[#1e293b]/95 backdrop-blur z-10 flex justify-between items-center p-6 border-b border-slate-700">
+                <h3 class="font-bold text-2xl text-white flex items-center gap-2"><span id="modal-icon" class="text-purple-500"><i data-lucide="edit-3"></i></span> <span id="modal-title">Edit Content</span></h3>
+                <button onclick="closeModal()" class="p-2 hover:bg-slate-800 rounded-full text-gray-400 hover:text-white transition"><i data-lucide="x" class="w-6 h-6"></i></button>
+            </div>
+            <form id="data-form" class="p-6 space-y-8">
+                <input type="hidden" id="edit-id">
+                <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
+                    <div class="md:col-span-8 space-y-4">
+                        <div><label class="text-xs font-bold text-purple-400 uppercase mb-1 block">Title</label><input type="text" id="inp-name" class="w-full p-3 bg-[#0f172a] border border-slate-700 rounded-lg focus:border-purple-500 outline-none transition text-white" placeholder="e.g. Stranger Things" required></div>
+                        <div><label class="text-xs font-bold text-gray-500 uppercase mb-1 block">Generated SEO Slug</label><input type="text" id="inp-seo-title" class="w-full p-3 bg-[#0f172a] border border-slate-700 rounded-lg text-gray-400 text-sm focus:border-purple-500 outline-none"></div>
+                    </div>
+                    <div class="md:col-span-4"><label class="text-xs font-bold text-purple-400 uppercase mb-1 block">Poster URL</label><input type="url" id="inp-img" class="w-full p-3 bg-[#0f172a] border border-slate-700 rounded-lg focus:border-purple-500 outline-none text-sm mb-2" required onchange="document.getElementById('preview-img').src = this.value"><img id="preview-img" src="" class="w-full h-40 object-cover rounded-lg bg-[#0f172a] border border-slate-700" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAiIGhlaWdodD0iMTAwIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjMGUxNzJhIi8+PC9zdmc+'"></div>
+                </div>
+                <div class="bg-[#0f172a] p-5 rounded-xl border border-slate-700">
+                    <div class="flex items-center justify-between mb-4"><h4 class="text-sm font-bold text-white uppercase flex items-center gap-2"><i data-lucide="play-circle" class="text-emerald-500"></i> Media Source</h4><div id="series-controls" class="hidden"><button type="button" onclick="addEpInput()" class="text-xs bg-emerald-600 hover:bg-emerald-700 text-white px-3 py-1.5 rounded font-bold transition flex items-center gap-1 shadow-lg shadow-emerald-900/20"><i data-lucide="plus"></i> Add Episode</button></div></div>
+                    <div id="movie-inputs"><input type="url" id="inp-movie-url" class="w-full p-3 bg-[#1e293b] border border-slate-700 rounded-lg outline-none focus:border-emerald-500 text-emerald-400 font-mono text-sm" placeholder="Paste Movie M3U8 / MP4 / Embed URL here..."></div>
+                    <div id="series-inputs" class="hidden space-y-3"><div id="ep-list-container" class="space-y-3 max-h-[400px] overflow-y-auto pr-2 custom-scroll"></div></div>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div><label class="text-xs font-bold text-gray-500 uppercase mb-1 block">Meta Description</label><textarea id="inp-seo-desc" class="w-full p-3 bg-[#0f172a] border border-slate-700 rounded-lg outline-none h-32 text-sm resize-none focus:border-purple-500"></textarea></div>
+                    <div><label class="text-xs font-bold text-gray-500 uppercase mb-1 block">SEO Content (Bottom)</label><textarea id="inp-seo-content" class="w-full p-3 bg-[#0f172a] border border-slate-700 rounded-lg outline-none h-32 text-sm font-mono text-gray-400 resize-none focus:border-purple-500"></textarea></div>
+                </div>
+                <div class="flex flex-wrap gap-4 pt-4 border-t border-slate-700">
+                    <label class="flex items-center gap-2 cursor-pointer bg-[#0f172a] px-4 py-2 rounded-lg border border-slate-700 hover:border-purple-500 transition select-none"><input type="checkbox" id="inp-public" checked class="w-5 h-5 accent-purple-600 rounded"> <span class="text-sm font-bold">Public</span></label>
+                    <label class="flex items-center gap-2 cursor-pointer bg-[#0f172a] px-4 py-2 rounded-lg border border-slate-700 hover:border-purple-500 transition select-none"><input type="checkbox" id="inp-sitemap" checked class="w-5 h-5 accent-purple-600 rounded"> <span class="text-sm font-bold">Sitemap</span></label>
+                    <label class="flex items-center gap-2 cursor-pointer bg-[#0f172a] px-4 py-2 rounded-lg border border-slate-700 hover:border-yellow-500 transition select-none"><input type="checkbox" id="inp-featured" class="w-5 h-5 accent-yellow-500 rounded"> <span class="text-sm font-bold text-yellow-500">Featured</span></label>
+                    <label class="flex items-center gap-2 cursor-pointer bg-[#0f172a] px-4 py-2 rounded-lg border border-slate-700 hover:border-red-500 transition select-none"><input type="checkbox" id="inp-seo-index" checked class="w-5 h-5 accent-red-500 rounded"> <span class="text-sm font-bold text-gray-400">Index</span></label>
+                </div>
+                <button type="submit" class="w-full bg-gradient-to-r from-purple-600 to-indigo-600 py-4 rounded-xl font-bold text-white hover:opacity-90 transition shadow-xl shadow-purple-900/30 text-lg">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="ads-modal" class="fixed inset-0 bg-black/90 z-[70] hidden flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-[#1e293b] w-full max-w-4xl rounded-xl p-6 border border-slate-700 max-h-[95vh] overflow-y-auto shadow-2xl">
+            <div class="flex justify-between mb-6"><h3 class="font-bold text-xl text-yellow-400 flex items-center gap-2"><i data-lucide="dollar-sign"></i> Ad Placements</h3><button onclick="closeAdsModal()" class="hover:text-red-400"><i data-lucide="x"></i></button></div>
+            <form id="ads-form" class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div><label class="text-xs font-bold text-gray-500 uppercase">Global Header</label><textarea id="ad-global-head" class="w-full h-24 bg-[#0f172a] border border-slate-600 rounded p-2 text-xs font-mono text-gray-300 mt-1 focus:border-yellow-500 outline-none"></textarea></div>
+                    <div><label class="text-xs font-bold text-gray-500 uppercase">Global Footer</label><textarea id="ad-global-foot" class="w-full h-24 bg-[#0f172a] border border-slate-600 rounded p-2 text-xs font-mono text-gray-300 mt-1 focus:border-yellow-500 outline-none"></textarea></div>
+                    <div><label class="text-xs font-bold text-gray-500 uppercase">Player Top</label><textarea id="ad-player-head" class="w-full h-24 bg-[#0f172a] border border-slate-600 rounded p-2 text-xs font-mono text-gray-300 mt-1 focus:border-yellow-500 outline-none"></textarea></div>
+                    <div><label class="text-xs font-bold text-gray-500 uppercase">Player Bottom</label><textarea id="ad-player-foot" class="w-full h-24 bg-[#0f172a] border border-slate-600 rounded p-2 text-xs font-mono text-gray-300 mt-1 focus:border-yellow-500 outline-none"></textarea></div>
+                </div>
+                <div><label class="text-xs font-bold text-gray-500 uppercase">Popunder</label><textarea id="ad-popunder" class="w-full h-20 bg-[#0f172a] border border-slate-600 rounded p-2 text-xs font-mono text-gray-300 mt-1 focus:border-yellow-500 outline-none"></textarea></div>
+                <button type="submit" class="w-full bg-yellow-600 py-3 rounded-lg font-bold hover:bg-yellow-700 text-white transition">Update Ad Settings</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="page-modal" class="fixed inset-0 bg-black/90 z-[65] hidden flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-[#1e293b] w-full max-w-3xl rounded-xl p-6 border border-slate-700 max-h-[90vh] overflow-y-auto shadow-2xl">
+            <div class="flex justify-between mb-6"><h3 class="font-bold text-xl text-white">SEO Page Manager</h3><button onclick="closePageModal()" class="hover:text-red-400"><i data-lucide="x"></i></button></div>
+            <form id="page-form" class="space-y-4">
+                <input type="hidden" id="page-edit-slug">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div><label class="text-xs font-bold text-gray-500 uppercase block mb-1">Page Type</label><select id="p-type" class="w-full p-3 bg-[#0f172a] border border-slate-700 rounded outline-none text-white"><option value="landing">Landing Page</option><option value="tag">Category/Tag</option><option value="series">Custom Series</option></select></div>
+                    <div><label class="text-xs font-bold text-gray-500 uppercase block mb-1">Slug (URL)</label><input type="text" id="p-slug" class="w-full p-3 bg-[#0f172a] border border-slate-700 rounded outline-none text-white" placeholder="my-page-url" required></div>
+                </div>
+                <div><label class="text-xs font-bold text-gray-500 uppercase block mb-1">Page Title</label><input type="text" id="p-title" class="w-full p-3 bg-[#0f172a] border border-slate-700 rounded outline-none text-white" required></div>
+                <div><label class="text-xs font-bold text-gray-500 uppercase block mb-1">Meta Description</label><textarea id="p-meta" class="w-full p-3 bg-[#0f172a] border border-slate-700 rounded outline-none h-20 text-white"></textarea></div>
+                <div><label class="text-xs font-bold text-gray-500 uppercase block mb-1">Body Content</label><textarea id="p-desc" class="w-full p-3 bg-[#0f172a] border border-slate-700 rounded outline-none h-32 text-white font-mono"></textarea></div>
+                <button type="submit" class="w-full bg-blue-600 py-3 rounded-lg font-bold hover:bg-blue-700 transition">Save SEO Page</button>
+            </form>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import { getFirestore, collection, addDoc, doc, updateDoc, deleteDoc, getDoc, setDoc, onSnapshot, query, orderBy, serverTimestamp, getCountFromServer, where, limit } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        // CONFIG
+        const firebaseConfig = { apiKey: "AIzaSyCrQBTH05r8pM1zckQX1X_5hNjfGdpU4sM", authDomain: "ebook-c25a9.firebaseapp.com", projectId: "ebook-c25a9", storageBucket: "ebook-c25a9.firebasestorage.app", messagingSenderId: "497431501409", appId: "1:497431501409:web:0e03fb6744c24e119c2820" };
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let currentTab = 'movies';
+        let unsubscribe = null;
+        let cachedData = []; 
+        let analyticsData = [];
+        let currentSort = 'views';
+
+        // AUTH
+        onAuthStateChanged(auth, user => {
+            if(user) { 
+                document.getElementById('auth-screen').classList.add('hidden'); 
+                document.getElementById('dashboard').classList.remove('hidden'); 
+                loadData(); 
+                updateStats(); 
+                notify("Welcome back, Admin!", "success");
+            } else { 
+                document.getElementById('auth-screen').classList.remove('hidden'); 
+                document.getElementById('dashboard').classList.add('hidden'); 
+            }
+        });
+
+        document.getElementById('login-form').addEventListener('submit', async e => {
+            e.preventDefault();
+            try { await signInWithEmailAndPassword(auth, document.getElementById('email').value, document.getElementById('password').value); } catch(e) { notify(e.message, "error"); }
+        });
+        document.getElementById('logout-btn').onclick = () => signOut(auth);
+
+        // --- DASHBOARD LOGIC ---
+        async function updateStats() {
+            try {
+                const mC = await getCountFromServer(collection(db, "movies"));
+                const sC = await getCountFromServer(collection(db, "series"));
+                const pC = await getCountFromServer(collection(db, "pages"));
+                document.getElementById('stat-movies').innerText = mC.data().count;
+                document.getElementById('stat-series').innerText = sC.data().count;
+                document.getElementById('stat-pages').innerText = pC.data().count;
+            } catch(e){ console.log("Stats error", e); }
+        }
+
+        window.switchTab = (tab) => {
+            currentTab = tab;
+            
+            // Toggle Views
+            const stdView = document.getElementById('standard-view');
+            const anaView = document.getElementById('analytics-view');
+            const searchBar = document.getElementById('global-search');
+            
+            // Highlight Buttons
+            ['movies','series','pages','analytics'].forEach(t => {
+                const btn = document.getElementById(`tab-${t}`);
+                if(btn) btn.className = t === tab ? `px-5 py-2.5 rounded-lg font-bold transition flex items-center gap-2 shadow-lg border text-white ${t==='analytics' ? 'bg-cyan-600 border-cyan-500' : 'bg-purple-600 border-purple-500'}` : "px-5 py-2.5 rounded-lg text-gray-400 hover:bg-slate-800 transition flex items-center gap-2 border border-transparent hover:border-slate-700";
+            });
+
+            if(tab === 'analytics') {
+                document.getElementById('main-add-btn').classList.add('hidden');
+                stdView.classList.add('hidden');
+                anaView.classList.remove('hidden');
+                searchBar.disabled = true;
+                searchBar.placeholder = "Analytics view (search disabled)";
+                loadAnalytics('today');
+            } else {
+                document.getElementById('main-add-btn').classList.remove('hidden');
+                stdView.classList.remove('hidden');
+                anaView.classList.add('hidden');
+                searchBar.disabled = false;
+                searchBar.placeholder = "Search content...";
+                document.getElementById('add-btn-text').textContent = tab === 'pages' ? "Add SEO Page" : "Add Content";
+                
+                if(tab === 'pages') document.getElementById('table-header').innerHTML = '<th class="p-4">Slug</th><th class="p-4">Title</th><th class="p-4">Type</th><th class="p-4 text-right">Actions</th>';
+                else document.getElementById('table-header').innerHTML = '<th class="p-4">Poster</th><th class="p-4">Title</th><th class="p-4 text-right">Actions</th>';
+                
+                document.getElementById('global-search').value = '';
+                loadData();
+            }
+        };
+
+        // --- STANDARD DATA LOADER (Movies, Series, Pages) ---
+        function loadData() {
+            if(unsubscribe) unsubscribe();
+            const tbody = document.getElementById('content-list');
+            tbody.innerHTML = '<tr><td colspan="4" class="p-12 text-center text-gray-500 animate-pulse">Loading data...</td></tr>';
+
+            let order = currentTab === 'pages' ? 'updatedAt' : 'createdAt';
+            const q = query(collection(db, currentTab), orderBy(order, 'desc'), limit(50));
+
+            unsubscribe = onSnapshot(q, snap => {
+                cachedData = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                renderList(cachedData);
+            });
+        }
+
+        window.handleSearch = (term) => {
+            const v = term.toLowerCase().trim();
+            if (!v) { renderList(cachedData); return; }
+            const filtered = cachedData.filter(i => (i.name || i.title || i.id || '').toLowerCase().includes(v));
+            renderList(filtered);
+        };
+
+        function renderList(data) {
+            const tbody = document.getElementById('content-list');
+            if(data.length === 0) { tbody.innerHTML = '<tr><td colspan="4" class="p-8 text-center text-gray-500">No content found.</td></tr>'; return; }
+
+            tbody.innerHTML = data.map(d => {
+                const isPage = currentTab === 'pages';
+                const name = isPage ? d.title : d.name;
+                const slug = isPage ? d.slug : createSlug(d.name);
+                const liveLink = `https://ranginx.fun/${slug}`;
+                
+                return `<tr class="hover:bg-slate-800/50 transition border-b border-slate-800 group">
+                    ${!isPage ? `<td class="p-4 w-24"><img src="${d.imageUrl}" class="w-16 h-24 object-cover rounded bg-slate-900 border border-slate-700 shadow-md" loading="lazy"></td>` : `<td class="p-4 font-mono text-xs text-purple-400">${d.slug}</td>`}
+                    <td class="p-4">
+                        <div class="font-bold text-base text-gray-200">${name}</div>
+                        <div class="flex gap-2 mt-2">
+                             ${d.isFeatured ? '<span class="text-[10px] text-yellow-500 bg-yellow-900/20 border border-yellow-700/30 px-1.5 py-0.5 rounded font-bold uppercase">Featured</span>' : ''}
+                             ${d.isPublic === false ? '<span class="text-[10px] text-red-500 bg-red-900/20 border border-red-700/30 px-1.5 py-0.5 rounded font-bold uppercase">Hidden</span>' : ''}
+                             <a href="${liveLink}" target="_blank" class="text-[10px] text-blue-400 bg-blue-900/20 border border-blue-700/30 px-1.5 py-0.5 rounded hover:bg-blue-900/40 flex items-center gap-1"><i data-lucide="external-link" class="w-3 h-3"></i> View Live</a>
+                        </div>
+                    </td>
+                    ${isPage ? `<td class="p-4"><span class="bg-slate-700 px-2 py-1 rounded text-xs">${d.pageType}</span></td>` : ''}
+                    <td class="p-4 text-right">
+                        <button onclick="${isPage ? `editPage('${d.id}')` : `editItem('${d.id}')`}" class="p-2 text-purple-400 hover:bg-purple-500/10 rounded-lg transition"><i data-lucide="edit" class="w-5 h-5"></i></button>
+                        <button onclick="${isPage ? `deletePage('${d.id}')` : `deleteItem('${d.id}')`}" class="p-2 text-red-400 hover:bg-red-500/10 rounded-lg transition"><i data-lucide="trash-2" class="w-5 h-5"></i></button>
+                    </td>
+                </tr>`;
+            }).join('');
+            lucide.createIcons();
+        }
+
+        // --- ANALYTICS ENGINE (NEW) ---
+                // --- UPDATED ANALYTICS LOADER ---
+        window.loadAnalytics = async (filter) => {
+            // Button Highlight logic
+            document.querySelectorAll('.filter-btn').forEach(b => b.className = "filter-btn px-4 py-1.5 rounded-md text-sm font-bold transition text-gray-400 hover:text-white");
+            document.getElementById(`btn-${filter}`).className = "filter-btn px-4 py-1.5 rounded-md text-sm font-bold transition bg-cyan-600 text-white shadow-lg";
+
+            const tbody = document.getElementById('analytics-list');
+            tbody.innerHTML = '<tr><td colspan="5" class="p-12 text-center text-cyan-400 animate-pulse font-bold">Fetching Analytics Data...</td></tr>';
+
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
+            const dd = String(today.getDate()).padStart(2, '0');
+            const todayStr = `${yyyy}-${mm}-${dd}`;
+            const monthStr = `${yyyy}-${mm}`;
+            
+            let q;
+            
+            // Query Setup
+            if (filter === 'today') {
+                document.getElementById('date-label').innerText = `Date: ${todayStr}`;
+                q = query(collection(db, 'pageStatsDaily'), where('date', '==', todayStr), orderBy('views', 'desc'), limit(50));
+            } else if (filter === 'yesterday') {
+                const yDate = new Date(); yDate.setDate(yDate.getDate() - 1);
+                const yStr = yDate.toISOString().split('T')[0];
+                document.getElementById('date-label').innerText = `Date: ${yStr}`;
+                q = query(collection(db, 'pageStatsDaily'), where('date', '==', yStr), orderBy('views', 'desc'), limit(50));
+            } else if (filter === 'month') {
+                document.getElementById('date-label').innerText = `Month: ${monthStr}`;
+                q = query(collection(db, 'pageStatsMonthly'), where('month', '==', monthStr), orderBy('views', 'desc'), limit(50));
+            } else if (filter === 'week') {
+                document.getElementById('date-label').innerText = `Last 7 Days`;
+                const d = new Date(); d.setDate(d.getDate() - 7);
+                const weekAgo = d.toISOString().split('T')[0];
+                q = query(collection(db, 'pageStatsDaily'), where('date', '>=', weekAgo), limit(200)); 
+            }
+
+            if(unsubscribe) unsubscribe();
+
+            // 🔥 MAIN FIX: Error Handling yahan honi chahiye
+            unsubscribe = onSnapshot(q, (snapshot) => {
+                let rawDocs = snapshot.docs.map(doc => doc.data());
+                
+                // Weekly Aggregation Logic
+                if (filter === 'week') {
+                    const agg = {};
+                    rawDocs.forEach(d => {
+                        if (!agg[d.pageId]) agg[d.pageId] = { pageId: d.pageId, title: d.title || d.pageId, views: 0, totalTime: 0 };
+                        agg[d.pageId].views += (d.views || 0); agg[d.pageId].totalTime += (d.totalTime || 0);
+                    });
+                    rawDocs = Object.values(agg);
+                }
+                
+                analyticsData = rawDocs;
+                renderAnalyticsUI();
+            }, (error) => {
+                // 🚨 ERROR POPUP LOGIC 🚨
+                console.error("Analytics Error:", error);
+                
+                // Link extract karna
+                const linkMatch = error.message.match(/https?:\/\/[^\s]+/);
+                
+                if (linkMatch) {
+                    const link = linkMatch[0];
+                    // User ko prompt dena copy karne ke liye
+                    window.prompt("⚠️ MISSING INDEX DETECTED!\nIs link ko copy karein aur browser mein open karein:", link);
+                } else {
+                    alert("Error: " + error.message + "\n(Check Console for details)");
+                }
+                
+                tbody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-red-400 font-bold border border-red-500/50 bg-red-900/10 rounded-lg">
+                    🛑 Index Missing!<br>
+                    Screen par aaye Popup se Link copy karke Index banayein.
+                </td></tr>`;
+            });
+        };
+
+
+        window.sortAnalytics = (key) => { currentSort = key; renderAnalyticsUI(); };
+
+                function renderAnalyticsUI() {
+            const tbody = document.getElementById('analytics-list');
+            
+            // Sort Data
+            analyticsData.sort((a, b) => {
+                if (currentSort === 'time') {
+                    const avgA = a.views ? a.totalTime / a.views : 0; 
+                    const avgB = b.views ? b.totalTime / b.views : 0;
+                    return avgB - avgA;
+                }
+                return b.views - a.views;
+            });
+
+            const totalViews = analyticsData.reduce((sum, item) => sum + (item.views || 0), 0);
+            const totalTime = analyticsData.reduce((sum, item) => sum + (item.totalTime || 0), 0);
+            
+            // FIX: Removed (* 1000) because data is already in MS
+            const avgGlobalTime = totalViews > 0 ? totalTime / totalViews : 0;
+
+            document.getElementById('card-views').innerText = totalViews.toLocaleString();
+            document.getElementById('card-pages').innerText = analyticsData.length;
+            
+            // FIX: Pass direct MS to formatDuration
+            document.getElementById('card-time').innerText = formatDuration(avgGlobalTime); 
+            
+            document.getElementById('card-top').innerText = analyticsData[0] ? (analyticsData[0].title || analyticsData[0].pageId) : '-';
+
+            if (analyticsData.length === 0) { 
+                tbody.innerHTML = '<tr><td colspan="5" class="p-8 text-center text-gray-500">No data available for this period.</td></tr>'; 
+                return; 
+            }
+
+            tbody.innerHTML = analyticsData.slice(0, 20).map((d, index) => {
+                // FIX: Removed (* 1000) here as well
+                const avgTime = d.views > 0 ? d.totalTime / d.views : 0;
+                
+                const rankColor = index === 0 ? 'text-yellow-400' : (index === 1 ? 'text-gray-300' : (index === 2 ? 'text-orange-400' : 'text-gray-500'));
+                
+                // Engagement Bar Logic
+                const maxViews = analyticsData[0].views || 1;
+                const barWidth = Math.min((d.views / maxViews) * 100, 100);
+
+                return `<tr class="hover:bg-slate-800/50 transition border-b border-slate-800/50">
+                    <td class="p-4 text-center font-bold ${rankColor}">${index + 1}</td>
+                    <td class="p-4">
+                        <div class="font-bold text-gray-200 line-clamp-1">${d.title || 'Unknown Page'}</div>
+                        <div class="text-[10px] text-gray-500 font-mono">${d.pageId}</div>
+                    </td>
+                    <td class="p-4 text-right font-mono text-cyan-400">${d.views.toLocaleString()}</td>
+                    <td class="p-4 text-right font-mono text-gray-400">${formatDuration(avgTime)}</td>
+                    <td class="p-4 text-right hidden md:table-cell">
+                        <div class="w-full bg-slate-800 rounded-full h-1.5 mt-2">
+                            <div class="bg-cyan-600 h-1.5 rounded-full" style="width: ${barWidth}%"></div>
+                        </div>
+                    </td>
+                </tr>`;
+            }).join('');
+            
+            lucide.createIcons();
+        }
+
+
+        // --- CONTENT EDIT LOGIC ---
+        document.getElementById('inp-name').addEventListener('input', (e) => {
+            document.getElementById('inp-seo-title').value = e.target.value + " Watch Online Free HD"; 
+        });
+
+        window.openModal = () => { if (currentTab === 'pages') openPageModal(); else openContentModal(); };
+        function openContentModal(isEdit=false) {
+            document.getElementById('modal').classList.remove('hidden');
+            document.getElementById('modal-title').textContent = isEdit ? "Edit Entry" : "Add New Entry";
+            const isSeries = currentTab === 'series';
+            document.getElementById('movie-inputs').classList.toggle('hidden', isSeries);
+            document.getElementById('series-controls').classList.toggle('hidden', !isSeries);
+            document.getElementById('series-inputs').classList.toggle('hidden', !isSeries);
+            if(!isEdit) { 
+                document.getElementById('data-form').reset(); document.getElementById('edit-id').value = ''; document.getElementById('ep-list-container').innerHTML = ''; 
+                document.getElementById('preview-img').src = ''; document.getElementById('inp-seo-index').checked = true;
+                if(isSeries) addEpInput();
+            }
+        }
+        window.closeModal = () => document.getElementById('modal').classList.add('hidden');
+
+        window.addEpInput = (data = null) => {
+            const container = document.getElementById('ep-list-container');
+            const epNum = data ? data.episodeNumber : container.children.length + 1;
+            const div = document.createElement('div');
+            div.className = 'episode-item bg-[#1e293b] border border-slate-700 p-4 rounded-xl relative group hover:border-purple-500 transition';
+            div.innerHTML = `<div class="flex gap-3 mb-2 items-end"><div class="w-16"><label class="text-[10px] text-gray-500 font-bold uppercase">Ep No.</label><input type="number" value="${epNum}" class="ep-num w-full p-2 bg-[#0f172a] border border-slate-700 rounded text-center text-white font-bold"></div><div class="flex-1"><label class="text-[10px] text-gray-500 font-bold uppercase">Source URL (MP4/M3U8)</label><input type="url" value="${data ? (data.url || '') : ''}" placeholder="https://..." class="ep-url w-full p-2 bg-[#0f172a] border border-slate-700 rounded text-emerald-400 font-mono text-sm"></div></div><div class="mb-1"><input type="text" value="${data ? (data.title || '') : ''}" placeholder="Episode Title (Optional)" class="ep-title w-full p-2 bg-transparent border-b border-slate-700 text-sm focus:border-purple-500 outline-none"></div><div><input type="text" value="${data ? (data.description || '') : ''}" placeholder="Short Episode Summary (SEO)" class="ep-desc w-full p-2 bg-transparent border-b border-slate-700 text-xs text-gray-400 focus:border-purple-500 outline-none"></div><button type="button" onclick="this.closest('.episode-item').remove()" class="absolute top-2 right-2 text-red-500 bg-red-500/10 p-1.5 rounded hover:bg-red-500 hover:text-white transition opacity-0 group-hover:opacity-100"><i data-lucide="trash-2" class="w-4 h-4"></i></button>`;
+            container.appendChild(div); lucide.createIcons();
+        };
+
+        document.getElementById('data-form').addEventListener('submit', async e => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]'); btn.innerHTML = `<i data-lucide="loader" class="animate-spin w-5 h-5"></i> Saving...`;
+            try {
+                const id = document.getElementById('edit-id').value;
+                const data = { name: document.getElementById('inp-name').value, imageUrl: document.getElementById('inp-img').value, isPublic: document.getElementById('inp-public').checked, seoTitle: document.getElementById('inp-seo-title').value, seoDescription: document.getElementById('inp-seo-desc').value, seoContent: document.getElementById('inp-seo-content').value, seoIndex: document.getElementById('inp-seo-index').checked, includeInSitemap: document.getElementById('inp-sitemap').checked, isFeatured: document.getElementById('inp-featured').checked, lastUpdated: serverTimestamp() };
+                if(currentTab === 'movies') { data.movieUrl = document.getElementById('inp-movie-url').value; } 
+                else { const epElements = document.querySelectorAll('.episode-item'); data.episodes = Array.from(epElements).map(el => ({ episodeNumber: parseInt(el.querySelector('.ep-num').value)||0, title: el.querySelector('.ep-title').value||'', url: el.querySelector('.ep-url').value||'', description: el.querySelector('.ep-desc').value||'' })).filter(e => e.url).sort((a,b) => a.episodeNumber - b.episodeNumber); }
+                if(id) await updateDoc(doc(db, currentTab, id), data); else { data.createdAt = serverTimestamp(); await addDoc(collection(db, currentTab), data); }
+                closeModal(); notify("Saved!", "success");
+            } catch(err) { console.error(err); notify("Error", "error"); }
+            btn.innerHTML = "Save Changes";
+        });
+
+        window.editItem = async (id) => {
+            try {
+                const d = (await getDoc(doc(db, currentTab, id))).data(); openContentModal(true);
+                document.getElementById('edit-id').value = id; document.getElementById('inp-name').value = d.name||''; document.getElementById('inp-img').value = d.imageUrl||''; document.getElementById('preview-img').src = d.imageUrl||'';
+                document.getElementById('inp-public').checked = d.isPublic!==false; document.getElementById('inp-seo-title').value = d.seoTitle||''; document.getElementById('inp-seo-desc').value = d.seoDescription||''; document.getElementById('inp-seo-content').value = d.seoContent||'';
+                document.getElementById('inp-seo-index').checked = d.seoIndex!==false; document.getElementById('inp-sitemap').checked = d.includeInSitemap!==false; document.getElementById('inp-featured').checked = d.isFeatured||false;
+                if(currentTab === 'movies') document.getElementById('inp-movie-url').value = d.movieUrl||''; else { const container = document.getElementById('ep-list-container'); container.innerHTML = ''; if(d.episodes && d.episodes.length > 0) d.episodes.forEach(e => addEpInput(e)); else addEpInput(); }
+            } catch(e) { notify("Error", "error"); }
+        };
+
+        window.deleteItem = async (id) => { if(confirm("Delete?")) { await deleteDoc(doc(db, currentTab, id)); notify("Deleted", "success"); }};
+
+        // --- ADS ---
+        window.openAdsModal = async () => { document.getElementById('ads-modal').classList.remove('hidden'); try { const snap = await getDoc(doc(db, 'settings', 'ads')); if(snap.exists()) { const d = snap.data(); ['globalHeader','globalFooter','playerHeader','playerFooter','popunder'].forEach(k => { const el = document.getElementById(k === 'popunder' ? 'ad-popunder' : `ad-${k.replace('Header','-head').replace('Footer','-foot')}`); if(el) el.value = d[k] || ''; }); } } catch(e) {} };
+        window.closeAdsModal = () => document.getElementById('ads-modal').classList.add('hidden');
+        document.getElementById('ads-form').addEventListener('submit', async (e) => { e.preventDefault(); const adsData = { globalHeader: document.getElementById('ad-global-head').value, globalFooter: document.getElementById('ad-global-foot').value, playerHeader: document.getElementById('ad-player-head').value, playerFooter: document.getElementById('ad-player-foot').value, popunder: document.getElementById('ad-popunder').value }; await setDoc(doc(db, 'settings', 'ads'), adsData); closeAdsModal(); notify("Ads Updated", "success"); });
+
+        // --- PAGE EDIT ---
+        function openPageModal(isEdit=false) { document.getElementById('page-modal').classList.remove('hidden'); if(!isEdit) { document.getElementById('page-form').reset(); document.getElementById('page-edit-slug').value = ''; } }
+        window.closePageModal = () => document.getElementById('page-modal').classList.add('hidden');
+        document.getElementById('page-form').addEventListener('submit', async e => { e.preventDefault(); try { const slug = document.getElementById('p-slug').value.trim().toLowerCase().replace(/[^a-z0-9-]/g, '-'); const data = { pageType: document.getElementById('p-type').value, slug: slug, title: document.getElementById('p-title').value, metaDescription: document.getElementById('p-meta').value, description: document.getElementById('p-desc').value, updatedAt: serverTimestamp() }; await setDoc(doc(db, 'pages', slug), data); closePageModal(); notify("Page Saved", "success"); } catch(e) { notify("Error", "error"); } });
+        window.editPage = async (slug) => { const d = (await getDoc(doc(db, 'pages', slug))).data(); openPageModal(true); document.getElementById('p-slug').value = d.slug; document.getElementById('p-title').value = d.title||''; document.getElementById('p-type').value = d.pageType||'landing'; document.getElementById('p-meta').value = d.metaDescription||''; document.getElementById('p-desc').value = d.description||''; };
+        window.deletePage = async (slug) => { if(confirm("Delete Page?")) await deleteDoc(doc(db, 'pages', slug)); };
+
+        // UTILS
+        function notify(msg, type) { Toastify({ text: msg, duration: 3000, gravity: "top", position: "right", style: { background: type === 'error' ? "#ef4444" : "#10b981", borderRadius: "8px", fontWeight: "bold" } }).showToast(); }
+        function createSlug(name) { return name.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-'); }
+        function formatDuration(ms) { if(!ms) return '0s'; const sec = Math.floor(ms / 1000); return sec > 60 ? `${Math.floor(sec/60)}m ${sec%60}s` : `${sec}s`; }
+
+        lucide.createIcons();
+    </script>
+</body>
+</html>
