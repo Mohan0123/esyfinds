@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://*.google.com https://*.googlebot.com;">
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
+    
+    <title>Ranginx 18+ | Movies & Web Series</title>
+    <meta name="description" content="Watch 18+ Movies and Web Series online. Uncensored content streaming.">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    
+    <meta name="rating" content="RTA-5042-1996-1400-1577-RTA" />
+    <meta name="adult" content="true" />
+
+    <link rel="canonical" href="https://ranginx.fun/18plus.html" />
+    <script type="application/ld+json" id="schema-json"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: { 
+                        brand: '#e50914',
+                        dark: { bg: '#0a0a0a', card: '#121212', border: '#262626' } 
+                    },
+                    fontFamily: { sans: ['Outfit', 'sans-serif'] },
+                    animation: { 'fade': 'fadeIn 0.5s ease-out' },
+                    keyframes: { fadeIn: { '0%': { opacity: '0', transform: 'translateY(10px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } } }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { background-color: #0a0a0a; color: #e5e5e5; overflow-x: hidden; font-family: 'Outfit', sans-serif; }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: #0a0a0a; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: #e50914; }
+        
+        .glass-nav {
+            background: rgba(10, 10, 10, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .ad-slot { display: none; width: 100%; margin: 30px 0; justify-content: center; overflow: hidden; }
+        .ad-slot.active { display: flex; border: 1px solid #262626; background: #0f0f0f; min-height: 90px; }
+        .ep-btn { 
+            display: flex; align-items: center; justify-content: center; height: 40px; border-radius: 6px; 
+            border: 1px solid #262626; background: #141414; color: #aaa; font-size: 14px; font-weight: 500; 
+            transition: all 0.2s ease; text-decoration: none;
+        }
+        .ep-btn:hover { background: #222; color: white; border-color: #444; }
+        .ep-btn.active { background: #e50914; color: white; border-color: #e50914; pointer-events: none; }
+        .footer-link { cursor: pointer; color: #888; font-size: 14px; margin-bottom: 8px; display: block; transition: 0.2s; }
+        .footer-link:hover { color: #e50914; }
+        
+        .seo-content-wrapper {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            border-top: 1px solid #262626;
+            margin-top: 3rem;
+            background: #0f0f0f;
+            border-radius: 12px;
+        }
+        #seo-content { color: #9ca3af; font-size: 0.95rem; line-height: 1.8; }
+        #seo-content h2 { font-size: 1.5rem; font-weight: 700; color: white; margin-bottom: 1rem; margin-top: 0; }
+        #seo-content p { margin-bottom: 1rem; }
+    </style>
+</head>
+<body>
+
+<nav class="fixed top-0 w-full h-16 glass-nav z-[60] flex items-center justify-between px-4 lg:px-8 transition-all duration-300">
+    <div class="flex items-center gap-6">
+        <button id="menu-btn" class="p-2 text-gray-300 hover:text-white transition"><i data-lucide="menu" class="w-6 h-6"></i></button>
+        <a href="/" onclick="route(event)" class="text-2xl font-bold tracking-tighter text-white flex items-center gap-1">
+            <span class="text-brand">Rang</span>inx <span class="text-xs bg-brand px-1 rounded ml-1">18+</span>
+        </a>
+    </div>
+
+    <div class="hidden md:flex flex-grow max-w-md mx-8 relative">
+        <input type="text" id="desktop-search" placeholder="Search 18+ movies, series..." class="w-full bg-[#141414] border border-[#262626] pl-10 pr-4 py-2.5 rounded-full outline-none text-sm text-white focus:border-brand focus:ring-1 focus:ring-brand transition shadow-inner">
+        <i data-lucide="search" class="w-4 h-4 text-gray-500 absolute left-3.5 top-3"></i>
+    </div>
+    <button class="md:hidden p-2 text-white" onclick="document.getElementById('mobile-search').classList.toggle('hidden')"><i data-lucide="search" class="w-6 h-6"></i></button>
+</nav>
+
+<div id="mobile-search" class="fixed top-16 left-0 w-full bg-[#0a0a0a] p-4 hidden z-40 border-b border-[#262626] glass-nav">
+    <form class="flex relative" onsubmit="event.preventDefault(); handleSearch(this.querySelector('input').value)">
+        <input type="text" placeholder="Search..." class="w-full bg-[#141414] border border-[#262626] pl-10 pr-4 py-3 rounded-lg outline-none text-white focus:border-brand">
+        <i data-lucide="search" class="w-5 h-5 text-gray-500 absolute left-3 top-3.5"></i>
+    </form>
+</div>
+
+<aside id="sidebar" class="fixed top-16 left-0 h-full w-72 bg-[#0a0a0a] transform -translate-x-full transition-transform duration-300 z-[55] border-r border-[#262626] p-4 flex flex-col">
+    <div class="space-y-1">
+        <a href="/" onclick="route(event)" class="flex items-center gap-4 px-4 py-3.5 hover:bg-[#141414] rounded-lg text-gray-400 hover:text-brand transition font-medium"><i data-lucide="home" class="w-5 h-5"></i> Home</a>
+        <a href="/movies" onclick="route(event)" class="flex items-center gap-4 px-4 py-3.5 hover:bg-[#141414] rounded-lg text-gray-400 hover:text-white transition font-medium"><i data-lucide="film" class="w-5 h-5"></i> 18+ Movies</a>
+        <a href="/series" onclick="route(event)" class="flex items-center gap-4 px-4 py-3.5 hover:bg-[#141414] rounded-lg text-gray-400 hover:text-white transition font-medium"><i data-lucide="tv" class="w-5 h-5"></i> 18+ Series</a>
+    </div>
+    <div class="h-px bg-[#262626] my-4 mx-2"></div>
+    <div class="space-y-1">
+        <button onclick="openModal('dmca')" class="w-full flex items-center gap-4 px-4 py-3 hover:bg-[#141414] rounded-lg text-gray-400 hover:text-white text-left text-sm"><i data-lucide="shield-alert" class="w-4 h-4"></i> DMCA</button>
+    </div>
+</aside>
+<div id="overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[50] hidden transition-opacity" onclick="toggleSidebar()"></div>
+
+<div id="legal-modal" class="fixed inset-0 z-[100] bg-black/80 hidden items-center justify-center backdrop-blur-md p-4">
+    <div class="bg-[#141414] w-full max-w-lg rounded-2xl border border-[#262626] shadow-2xl flex flex-col max-h-[90vh] overflow-hidden transform transition-all scale-95 animate-fade">
+        <div class="flex justify-between items-center p-5 border-b border-[#262626]">
+            <h2 id="modal-title" class="text-xl font-bold text-white tracking-tight">Legal</h2>
+            <button onclick="closeModal()" class="p-2 hover:bg-[#222] rounded-full transition"><i data-lucide="x" class="w-5 h-5 text-gray-400"></i></button>
+        </div>
+        <div id="modal-body" class="p-6 overflow-y-auto text-sm text-gray-400 leading-relaxed space-y-4"></div>
+    </div>
+</div>
+
+<div id="age-modal" class="fixed inset-0 z-[999] bg-black flex items-center justify-center p-4 hidden">
+    <div class="bg-[#141414] w-full max-w-md rounded-2xl border border-[#262626] shadow-2xl p-8 text-center animate-fade">
+        <div class="mb-6 flex justify-center">
+            <div class="bg-red-500/10 p-4 rounded-full">
+                <span class="text-4xl font-bold text-brand">18+</span>
+            </div>
+        </div>
+        <h2 class="text-2xl font-bold text-white mb-2">Age Verification</h2>
+        <p class="text-gray-400 mb-8">This page contains explicit adult content (Movies & Series). You must be 18+.</p>
+        <div class="flex flex-col gap-3">
+            <button onclick="confirmAge()" class="w-full bg-brand hover:bg-red-700 text-white font-bold py-3.5 rounded-xl transition transform hover:scale-[1.02]">I am 18+ - Enter</button>
+            <button onclick="exitSite()" class="w-full bg-[#262626] hover:bg-[#333] text-gray-300 font-medium py-3.5 rounded-xl transition">Exit</button>
+        </div>
+    </div>
+</div>
+
+<main id="app" class="pt-16 min-h-screen"></main>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, collection, getDocs, doc, getDoc, updateDoc, increment, query, where, limit, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const db = getFirestore(initializeApp({
+        apiKey: "AIzaSyCrQBTH05r8pM1zckQX1X_5hNjfGdpU4sM",
+        authDomain: "ebook-c25a9.firebaseapp.com",
+        projectId: "ebook-c25a9",
+        storageBucket: "ebook-c25a9.firebasestorage.app",
+        messagingSenderId: "497431501409",
+        appId: "1:497431501409:web:0e03fb6744c24e119c2820"
+    }));
+
+    let allContent = [];
+    let ads = {};
+
+    // --- 18+ Logic ---
+    window.checkAge = () => {
+        const isAdult = localStorage.getItem('ranginx_adult_confirm');
+        if (isAdult !== 'true') { document.getElementById('age-modal').classList.remove('hidden'); }
+    };
+    window.confirmAge = () => { localStorage.setItem('ranginx_adult_confirm', 'true'); document.getElementById('age-modal').classList.add('hidden'); };
+    window.exitSite = () => { window.location.href = "https://www.google.com"; };
+
+    function updateSEO(meta) {
+        document.title = meta.title;
+        let descMeta = document.querySelector('meta[name="description"]');
+        if (!descMeta) { descMeta = document.createElement('meta'); descMeta.setAttribute('name', 'description'); document.head.appendChild(descMeta); }
+        descMeta.setAttribute("content", meta.desc);
+    }
+
+    function generateFallbackSeoContent(item) {
+        return `<h2>Watch ${item.name} Online (18+)</h2><p>Stream uncensored content of <strong>${item.name}</strong> on Ranginx.</p>`;
+    }
+    function getSeoContentHTML(item) { return (item.seoContent && item.seoContent.trim() !== "") ? item.seoContent : generateFallbackSeoContent(item); }
+
+    window.route = (event) => { event = event || window.event; event.preventDefault(); window.history.pushState({}, "", event.currentTarget.href); handleLocation(); };
+    window.onpopstate = handleLocation;
+
+    async function handleLocation() {
+        const path = window.location.pathname;
+        const parts = path.split('/').filter(p => p);
+        
+        document.getElementById('sidebar').classList.add('-translate-x-full');
+        document.getElementById('overlay').classList.add('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        if (window.location.pathname.endsWith('/') && window.location.pathname.length > 1) {
+            window.history.replaceState({}, "", window.location.pathname.slice(0, -1));
+        }
+
+        if (parts.length === 0 || path === '/index.html' || path === '/' || path.includes('18plus.html')) { renderHome(); return; }
+        if (parts[0] === 'movies') { renderHome('movie'); return; }
+        if (parts[0] === 'series') { renderHome('series'); return; }
+
+        const slug = parts[0];
+        const item = allContent.find(i => createSlug(i.name) === slug);
+
+        if (!item) { render404(); return; }
+
+        if (item.type === 'series') {
+            if (parts.length === 1) renderSeriesLanding(slug);
+            else if (parts.length === 2 && parts[1].startsWith('episode-')) {
+                const epNum = parseInt(parts[1].replace('episode-', ''));
+                if (Number.isInteger(epNum) && epNum > 0 && item.episodes && epNum <= item.episodes.length) renderPlayer(slug, epNum - 1);
+                else renderSeriesLanding(slug);
+            } else renderSeriesLanding(slug);
+        } else {
+            renderPlayer(slug, 0); // Movie Player
+        }
+    }
+
+    const getSkeleton = () => `<div class="px-4 lg:px-8 py-8 max-w-[1600px] mx-auto"><div class="w-full h-[40vh] md:h-[50vh] bg-[#141414] rounded-2xl animate-pulse mb-10"></div><div class="grid grid-cols-2 md:grid-cols-3 gap-4">${Array(6).fill(0).map(() => `<div class="aspect-video bg-[#141414] rounded-xl animate-pulse"></div>`).join('')}</div></div>`;
+
+    async function init() {
+        window.checkAge(); // Show 18+ Modal
+        loadAds();
+        document.getElementById('app').innerHTML = getSkeleton();
+        try {
+            // --- CRITICAL CHANGE: QUERY BOTH MOVIES AND SERIES WHERE isAdult == true ---
+            const [m, s] = await Promise.all([
+                getDocs(query(collection(db, 'movies'), where('isPublic', '==', true), where('isAdult', '==', true))),
+                getDocs(query(collection(db, 'series'), where('isPublic', '==', true), where('isAdult', '==', true)))
+            ]);
+
+            const movies = m.docs.map(d => ({id:d.id, ...d.data(), type:'movie'}));
+            const series = s.docs.map(d => ({id:d.id, ...d.data(), type:'series'}));
+            
+            allContent = [...movies, ...series].sort(()=> 0.5 - Math.random());
+            
+            handleLocation();
+        } catch(e) { 
+            console.error(e); 
+            // NOTE: If you see "FirebaseError: The query requires an index" in console:
+            // Click the link provided in the console error to create the composite index for both 'movies' and 'series'.
+        }
+    }
+
+    function render404() {
+        document.getElementById('app').innerHTML = `<div class="min-h-screen flex flex-col items-center justify-center text-center px-4"><h1 class="text-6xl font-bold text-brand mb-4">404</h1><p class="text-xl text-gray-300 mb-8">Content Not Found.</p><a href="/" onclick="route(event)" class="bg-white text-black px-6 py-3 rounded-lg font-bold">Go Back Home</a></div>`;
+    }
+
+    function renderHome(filterType = null) {
+        updateSEO({ title: "Ranginx 18+ - Uncensored Movies & Series", desc: "Watch 18+ movies and web series online." });
+
+        const data = filterType ? allContent.filter(i => i.type === filterType) : allContent;
+        const featured = data.find(i => i.isFeatured === true) || (data.length > 0 ? data[0] : null);
+        const listData = data.filter(i => i !== featured);
+        
+        let html = `
+            <div class="px-4 md:px-8 py-6 max-w-[1600px] mx-auto min-h-screen">
+                <div class="flex gap-3 overflow-x-auto pb-6 sticky top-16 bg-[#0a0a0a] z-20 py-2 no-scrollbar">
+                    <a href="/" onclick="route(event)" class="${!filterType?'bg-white text-black':'bg-[#141414] text-gray-400 hover:text-white border border-[#262626]'} px-6 py-2 rounded-full text-sm font-bold whitespace-nowrap transition shadow-lg">All 18+</a>
+                    <a href="/series" onclick="route(event)" class="${filterType==='series'?'bg-white text-black':'bg-[#141414] text-gray-400 hover:text-white border border-[#262626]'} px-6 py-2 rounded-full text-sm font-bold whitespace-nowrap transition shadow-lg">18+ Series</a>
+                    <a href="/movies" onclick="route(event)" class="${filterType==='movie'?'bg-white text-black':'bg-[#141414] text-gray-400 hover:text-white border border-[#262626]'} px-6 py-2 rounded-full text-sm font-bold whitespace-nowrap transition shadow-lg">18+ Movies</a>
+                </div>
+
+                ${featured && !filterType ? `
+                <div class="relative w-full h-[50vh] md:h-[60vh] rounded-2xl overflow-hidden mb-12 group border border-[#262626]">
+                    <div class="absolute inset-0 bg-cover bg-center transition duration-700 group-hover:scale-105" style="background-image: url('${featured.imageUrl}');"></div>
+                    <div class="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-6 md:p-12 w-full md:w-2/3">
+                        <span class="bg-brand text-white text-[10px] md:text-xs font-bold px-2 py-1 rounded uppercase tracking-wider mb-3 inline-block shadow-lg shadow-red-900/50">18+ Featured</span>
+                        <h1 class="text-3xl md:text-5xl font-bold text-white mb-4 leading-tight drop-shadow-lg">${featured.name}</h1>
+                        <p class="text-gray-300 text-sm md:text-base line-clamp-2 mb-6 max-w-lg">${featured.description || 'Watch strict 18+ content now.'}</p>
+                        <a href="/${createSlug(featured.name)}" onclick="route(event)" class="inline-flex items-center gap-2 bg-white text-black px-6 py-3 rounded-lg font-bold hover:bg-gray-200 transition transform hover:scale-105"><i data-lucide="play" class="w-5 h-5 fill-black"></i> Watch Now</a>
+                    </div>
+                </div>` : ''}
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-4 gap-y-8 animate-fade">`;
+
+        let adCount = 0;
+        const renderList = filterType ? data : listData; 
+
+        renderList.forEach((item, index) => {
+            const slug = createSlug(item.name);
+            html += `
+                <a href="/${slug}" onclick="route(event)" class="group block relative">
+                    <div class="relative aspect-video rounded-xl overflow-hidden mb-3 shadow-lg bg-[#141414] border border-[#222]">
+                        <img src="${item.imageUrl}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" loading="lazy" alt="${item.name}">
+                        <div class="absolute top-2 right-2 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded">18+</div>
+                        <div class="absolute bottom-2 left-2 bg-black/60 text-white text-[10px] font-bold px-2 py-1 rounded border border-white/10 uppercase">${item.type==='series'?'TV':'MOV'}</div>
+                    </div>
+                    <div>
+                        <h3 class="text-sm font-semibold text-gray-200 line-clamp-1 group-hover:text-brand transition">${item.name}</h3>
+                        <div class="flex items-center justify-between mt-1"><span class="text-[11px] text-gray-500">2025</span><span class="text-[10px] border border-gray-700 text-gray-400 px-1 rounded">HD</span></div>
+                    </div>
+                </a>`;
+            if ((index + 1) % 8 === 0) { html += `<div class="col-span-full"><div id="feed-ad-${adCount}" class="ad-slot"></div></div>`; adCount++; }
+        });
+
+        html += `</div></div>${getFooter()}`;
+        document.getElementById('app').innerHTML = html;
+        lucide.createIcons();
+        if(ads.globalFooter) for(let i=0; i<adCount; i++) renderAd(`feed-ad-${i}`, ads.globalFooter);
+    }
+
+    function renderSeriesLanding(slug) {
+        const item = allContent.find(i => createSlug(i.name) === slug);
+        if(!item) return render404(); 
+        updateSEO({ title: `${item.name} (18+) | Ranginx`, desc: item.description });
+        const seoContentHTML = getSeoContentHTML(item);
+
+        let html = `
+        <div class="min-h-screen">
+            <div class="relative w-full h-[60vh] lg:h-[70vh]">
+                <div class="absolute inset-0 bg-cover bg-top" style="background-image: url('${item.imageUrl}');"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/80 to-transparent"></div>
+                <div class="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/60 to-transparent"></div>
+                <div class="absolute bottom-0 left-0 w-full p-6 lg:p-12 flex flex-col md:flex-row gap-8 items-end max-w-[1600px] mx-auto">
+                    <div class="hidden md:block w-48 lg:w-64 flex-shrink-0 rounded-lg overflow-hidden shadow-2xl border border-[#262626]"><img src="${item.imageUrl}" class="w-full h-full object-cover"></div>
+                    <div class="mb-4">
+                        <span class="bg-red-600 text-white text-xs font-bold px-2 py-1 rounded uppercase mb-3 inline-block">18+ Only</span>
+                        <h1 class="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">${item.name}</h1>
+                        <p class="text-gray-300 text-sm md:text-lg max-w-2xl line-clamp-3 mb-6">${item.description || 'Stream strictly 18+ content.'}</p>
+                        <div class="flex flex-wrap gap-4"><a href="/${slug}/episode-1" onclick="route(event)" class="bg-brand hover:bg-red-700 text-white px-8 py-3.5 rounded-lg font-bold flex items-center gap-2 transition transform hover:scale-105"><i data-lucide="play-circle" class="w-5 h-5"></i> Start Watching</a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="max-w-[1600px] mx-auto px-6 py-12">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
+                    ${item.episodes ? item.episodes.map((ep, index) => `
+                        <a href="/${slug}/episode-${index+1}" onclick="route(event)" class="group bg-[#141414] border border-[#262626] hover:border-brand rounded-xl overflow-hidden transition hover:shadow-lg hover:shadow-brand/10 flex md:block">
+                            <div class="w-32 md:w-full md:aspect-video relative overflow-hidden bg-black flex-shrink-0"><img src="${item.imageUrl}" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition duration-500"><div class="absolute inset-0 flex items-center justify-center"><div class="bg-white/10 backdrop-blur-sm p-2 rounded-full group-hover:bg-brand group-hover:text-white transition"><i data-lucide="play" class="w-5 h-5 fill-current"></i></div></div></div>
+                            <div class="p-4 flex flex-col justify-center"><h3 class="font-bold text-white group-hover:text-brand transition text-lg">Episode ${index + 1}</h3><p class="text-gray-500 text-[10px] mt-1">18+ Uncensored</p></div>
+                        </a>`).join('') : '<p class="text-gray-500">No episodes.</p>'}
+                </div>
+                <section class="seo-content-wrapper"><article id="seo-content">${seoContentHTML}</article></section>
+            </div>${getFooter()}`;
+        document.getElementById('app').innerHTML = html;
+        lucide.createIcons();
+    }
+
+    function renderPlayer(slug, urlEpIndex = null) {
+        const item = allContent.find(i => createSlug(i.name) === slug);
+        if(!item) return render404(); 
+
+        let activeIndex = 0;
+        const isSeries = item.type === 'series';
+        if (isSeries && urlEpIndex !== null) {
+            if (item.episodes && item.episodes[urlEpIndex]) activeIndex = urlEpIndex;
+            else { window.history.replaceState({}, "", `/${slug}`); renderSeriesLanding(slug); return; }
+        }
+
+        const videoSrc = (item.type === 'movie') ? item.movieUrl : (item.episodes?.length ? item.episodes[activeIndex].url : "");
+        const pageTitle = isSeries ? `${item.name} Ep ${activeIndex+1} (18+)` : `${item.name} (18+) Movie`;
+        updateSEO({ title: pageTitle, desc: "Watch 18+ content." });
+
+        let html = `
+        <div class="max-w-[1800px] mx-auto lg:px-6 py-6">
+            <div class="px-4 lg:px-0 text-sm text-gray-400 mb-4 flex items-center gap-2"><a href="/" onclick="route(event)" class="hover:text-white">Home</a> / <span class="text-brand">18+ Content</span></div>
+            <div class="flex flex-col lg:flex-row gap-8">
+                <div class="w-full lg:w-[75%]">
+                    <div id="player-ad-top" class="ad-slot"></div>
+                    <div class="relative bg-black rounded-xl overflow-hidden shadow-2xl border border-[#262626]"><div class="aspect-video w-full relative z-10"><video id="main-video" controls class="w-full h-full" controlsList="nodownload" src="${videoSrc}" autoplay playsinline></video></div></div>
+                    <div class="mt-6 animate-fade px-4 lg:px-0">
+                        <h1 class="text-2xl md:text-3xl font-bold text-white leading-tight mb-2">${item.name} ${isSeries ? `<span class="text-brand font-normal">Ep ${activeIndex + 1}</span>` : ''}</h1>
+                        <div class="flex items-center gap-4 text-sm text-gray-400 mb-6"><span class="bg-red-600 px-2 py-1 rounded text-xs text-white">18+</span><span>${isSeries ? 'Series' : 'Movie'}</span></div>
+                        <div id="player-ad-bot" class="ad-slot"></div>
+                        ${isSeries ? `<div class="mt-8 bg-[#141414] border border-[#262626] rounded-xl p-6"><div class="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-2">${item.episodes.map((ep, idx) => `<a href="/${slug}/episode-${idx+1}" onclick="route(event)" class="ep-btn ${idx === activeIndex ? 'active' : ''}">${idx + 1}</a>`).join('')}</div></div>` : ''}
+                    </div>
+                </div>
+                <div class="w-full lg:w-[25%] px-4 lg:px-0">
+                    <h3 class="font-bold text-white text-lg mb-4 pl-2 border-l-4 border-brand">More 18+</h3>
+                    <div class="flex flex-col gap-4">${allContent.slice(0, 10).map(s => `<a href="/${createSlug(s.name)}" onclick="route(event)" class="flex gap-3 bg-[#141414] p-2 rounded"><div class="w-28 aspect-video bg-[#222] rounded overflow-hidden"><img src="${s.imageUrl}" class="w-full h-full object-cover"></div><div class="py-1"><h4 class="text-sm font-semibold text-gray-200 line-clamp-2">${s.name}</h4><p class="text-[10px] text-red-500 mt-1">18+ ${s.type}</p></div></a>`).join('')}</div>
+                </div>
+            </div>
+            <section class="seo-content-wrapper px-4 lg:px-8"><article id="seo-content">${getSeoContentHTML(item)}</article></section>
+        </div>${getFooter()}`;
+
+        document.getElementById('app').innerHTML = html;
+        lucide.createIcons();
+        if(ads) { renderAd('player-ad-top', ads.playerHeader || ads.globalHeader); renderAd('player-ad-bot', ads.playerFooter || ads.globalFooter); }
+    }
+
+        window.openModal = (type) => {
+        const titleEl = document.getElementById('modal-title');
+        const bodyEl = document.getElementById('modal-body');
+        const modal = document.getElementById('legal-modal');
+        
+        // Sidebar aur Overlay band karna (agar khula ho to)
+        document.getElementById('sidebar').classList.add('-translate-x-full');
+        document.getElementById('overlay').classList.add('hidden');
+
+        let title = "";
+        let content = "";
+
+        if (type === 'dmca') {
+            title = "DMCA & Disclaimer";
+            content = `
+                <div class="space-y-4">
+                    <div>
+                        <h3 class="text-white font-bold text-lg mb-1">Copyright Disclaimer</h3>
+                        <p>Ranginx is an online video search engine. We do not host, upload, or store any video files on our servers. All content is provided by non-affiliated third parties.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-white font-bold text-lg mb-1">DMCA Notice</h3>
+                        <p>We take copyright violation seriously. If you are a copyright owner and want your content removed, please contact us properly.</p>
+                    </div>
+                    <div class="bg-[#222] p-3 rounded border border-[#333]">
+                        <p class="text-sm text-gray-400">Contact for Takedown:</p>
+                        <p class="text-brand font-bold">admin@ranginx.fun</p>
+                    </div>
+                </div>
+            `;
+        } else {
+            // Privacy Policy for 18+
+            title = "Privacy Policy (18+)";
+            content = `
+                <div class="space-y-4">
+                    <div>
+                        <h3 class="text-white font-bold text-lg mb-1">Adult Content Warning</h3>
+                        <p>This website contains explicit material intended for adults (18+). By using this site, you confirm that you are of legal age in your jurisdiction.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-white font-bold text-lg mb-1">Cookies & Ads</h3>
+                        <p>We use third-party advertising companies to serve ads. These companies may use cookies to show ads based on your visits. We do not personally track your real-life identity.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-white font-bold text-lg mb-1">Data Safety</h3>
+                        <p>We do not sell your personal data. Your browsing activity is used solely for analytics and improving website performance.</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        if(titleEl) titleEl.innerText = title;
+        if(bodyEl) bodyEl.innerHTML = content;
+        
+        modal.classList.remove('hidden'); 
+        modal.classList.add('flex');
+    };
+    window.closeModal = () => { document.getElementById('legal-modal').classList.add('hidden'); document.getElementById('legal-modal').classList.remove('flex'); };
+    async function loadAds() { try { const snap = await getDoc(doc(db, 'settings', 'ads')); if(snap.exists()) ads = snap.data(); } catch(e){} }
+    function renderAd(id, code) { const el = document.getElementById(id); if(!el || !code) return; el.classList.add('active'); el.innerHTML = code.includes('<script') ? '' : code; if(code.includes('<script')) { const f = document.createElement('iframe'); f.style.cssText="width:100%;height:100%;border:none;min-height:90px;"; el.appendChild(f); f.contentWindow.document.write(`<body>${code}</body>`); } }
+
+    function getFooter() { return `<footer class="bg-[#050505] border-t border-[#1a1a1a] pt-16 pb-10 mt-12"><div class="text-center text-[11px] text-[#444]">&copy; 2025 Ranginx 18+. All rights reserved.</div></footer>`; }
+    function createSlug(name) { return name.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-'); }
+    window.toggleSidebar = () => { const sb = document.getElementById('sidebar'); document.getElementById('overlay').classList.toggle('hidden'); sb.classList.toggle('-translate-x-full'); };
+    document.getElementById('menu-btn').onclick = toggleSidebar;
+    window.handleSearch = (val) => { if(!val) return; const v = val.toLowerCase().trim(); const filtered = allContent.filter(i => i.name.toLowerCase().includes(v)); const temp = [...allContent]; allContent = filtered; renderHome(); allContent = temp; document.getElementById('mobile-search').classList.add('hidden'); };
+    document.getElementById('desktop-search').addEventListener('keyup', (e) => { if (e.key === 'Enter') handleSearch(e.target.value) });
+
+    init();
+</script>
+
+</body>
+</html>
