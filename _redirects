@@ -1,6 +1,11 @@
+# Static Files
 /favicon.ico    /favicon.ico    200
 /sitemap.xml    /sitemap.xml    200
 /robots.txt     /robots.txt     200
 
-/watch/*        /watch.html     200
-/*              /index.html     200
+# 18+ Section (Isse 18+ series seedha open hongi)
+/18plus/* /18plus.html    200
+/18plus         /18plus.html    200
+
+# Normal Section (Baki sabke liye Index.html)
+/* /index.html     200
