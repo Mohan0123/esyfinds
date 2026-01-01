@@ -6,7 +6,7 @@
     <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://*.google.com https://*.googlebot.com;">
     <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
     
-    <title>Ranginx Streaming Platform</title>
+    <title>Ranginx – Watch 18+ Web Series & Movies Online</title>
     <meta name="description" content="Browse and watch movies and web series online on Ranginx.">
     
     <meta name="robots" content="index, follow, max-image-preview:large">
@@ -15,7 +15,7 @@
     <meta name="adult" content="true" />
 
     <meta property="og:site_name" content="Ranginx">
-    <meta property="og:type" content="article">
+    <meta property="og:type" content="website">
     <meta property="og:title" content="Ranginx Platform">
     <meta property="og:description" content="Stream movies and series.">
     <meta property="og:image" content="https://ranginx.fun/og-image.jpg">
@@ -25,7 +25,19 @@
     <meta name="twitter:description" content="Stream movies and series.">
     
     <link rel="canonical" href="https://ranginx.fun/" />
-    <script type="application/ld+json" id="schema-json"></script>
+    <script type="application/ld+json" id="schema-json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Ranginx",
+      "url": "https://ranginx.fun/",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://ranginx.fun/?search={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -167,7 +179,8 @@
         appId: "1:497431501409:web:0e03fb6744c24e119c2820"
     }));
 
-    let allContent = [];
+    let allContent = []; // Shows Safe Content
+    let restrictedContent = []; // Stores Adult Content for Redirect Logic
     let ads = {};
 
     function isAnalyticsSafe() {
@@ -279,7 +292,6 @@
         }
     });
 
-    // --- MANDATORY FIX 4: STRICT CANONICAL & SEO UPDATE LOGIC ---
     function updateSEO(meta) {
         document.title = meta.title;
 
@@ -287,24 +299,18 @@
         if (!descMeta) { descMeta = document.createElement('meta'); descMeta.setAttribute('name', 'description'); document.head.appendChild(descMeta); }
         descMeta.setAttribute("content", meta.desc);
 
-        // MANDATORY FIX 7: Safe Robots Handling
         let robotsMeta = document.querySelector('meta[name="robots"]');
         if (!robotsMeta) { robotsMeta = document.createElement('meta'); robotsMeta.setAttribute('name', 'robots'); document.head.appendChild(robotsMeta); }
         robotsMeta.setAttribute("content", meta.robots || "index, follow, max-image-preview:large");
 
-        // Keywords
         let kwMeta = document.querySelector('meta[name="keywords"]');
         if (meta.keywords && meta.keywords.length > 0) {
             if (!kwMeta) { kwMeta = document.createElement('meta'); kwMeta.setAttribute('name', 'keywords'); document.head.appendChild(kwMeta); }
             kwMeta.setAttribute("content", Array.isArray(meta.keywords) ? meta.keywords.join(', ') : meta.keywords);
         } else if (kwMeta) kwMeta.remove();
 
-        // --- FIX: CANONICAL MUST BE CLEAN ---
-        // 1. Base URL from meta or current location
-        let rawUrl = meta.url || `https://ranginx.fun${window.location.pathname}`;
-        // 2. Strip query parameters and hashes immediately
-        let cleanUrl = rawUrl.split('?')[0].split('#')[0];
-        // 3. Remove trailing slash (unless it's the root domain)
+        let cleanUrl = meta.url || `https://ranginx.fun${window.location.pathname}`;
+        cleanUrl = cleanUrl.split('?')[0].split('#')[0];
         if (cleanUrl.length > 20 && cleanUrl.endsWith('/')) {
             cleanUrl = cleanUrl.slice(0, -1);
         }
@@ -321,28 +327,19 @@
 
         setMeta('meta[property="og:title"]', 'content', meta.title);
         setMeta('meta[property="og:description"]', 'content', meta.desc);
-        setMeta('meta[property="og:url"]', 'content', cleanUrl); // Use cleaned URL
-        setMeta('meta[property="og:type"]', 'content', meta.ogType || "article");
+        setMeta('meta[property="og:url"]', 'content', cleanUrl);
+        setMeta('meta[property="og:type"]', 'content', meta.ogType || "website");
         if (meta.image) setMeta('meta[property="og:image"]', 'content', meta.image);
         
         setMeta('meta[name="twitter:title"]', 'content', meta.title);
         setMeta('meta[name="twitter:description"]', 'content', meta.desc);
         if (meta.image) setMeta('meta[name="twitter:image"]', 'content', meta.image);
 
-        // MANDATORY FIX 5: Dynamic Schema (WebSite vs WebPage vs Movie)
-        // MANDATORY FIX 5: Dynamic Schema (WebSite vs WebPage vs Movie)
-const schemaData = {
-    "@context": "https://schema.org",
-    "@graph": Array.isArray(meta.schema)
-        ? meta.schema
-        : (meta.schema ? [meta.schema] : [])
-};
-
-const schemaEl = document.getElementById('schema-json');
-if (schemaEl) {
-    schemaEl.textContent = JSON.stringify(schemaData);
-}
-        
+        const schemaData = { 
+            "@context": "https://schema.org", 
+            "@graph": Array.isArray(meta.schema) ? meta.schema : (meta.schema ? [meta.schema] : [])
+        };
+        document.getElementById('schema-json').textContent = JSON.stringify(schemaData);
     }
 
     function generateFallbackSeoContent(item) {
@@ -383,22 +380,33 @@ if (schemaEl) {
         if (parts[0] === 'series') { renderHome('series'); return; }
 
         const slug = parts[0];
+        
+        // 1. Check in NORMAL (Safe) Content
         const item = allContent.find(i => createSlug(i.name) === slug);
 
-        if (!item) { 
-            render404(); 
-            return; 
-        }
-
-        if (item.type === 'series') {
-            if (parts.length === 1) renderSeriesLanding(slug);
-            else if (parts.length === 2 && parts[1].startsWith('episode-')) {
-                const epNum = parseInt(parts[1].replace('episode-', ''));
-                if (Number.isInteger(epNum) && epNum > 0 && item.episodes && epNum <= item.episodes.length) renderPlayer(slug, epNum - 1);
-                else { window.history.replaceState({}, "", `/${slug}`); renderSeriesLanding(slug); }
-            } else { window.history.replaceState({}, "", `/${slug}`); renderSeriesLanding(slug); }
+        if (item) {
+            // Found in Normal -> Render
+            if (item.type === 'series') {
+                if (parts.length === 1) renderSeriesLanding(slug);
+                else if (parts.length === 2 && parts[1].startsWith('episode-')) {
+                    const epNum = parseInt(parts[1].replace('episode-', ''));
+                    if (Number.isInteger(epNum) && epNum > 0 && item.episodes && epNum <= item.episodes.length) renderPlayer(slug, epNum - 1);
+                    else { window.history.replaceState({}, "", `/${slug}`); renderSeriesLanding(slug); }
+                } else { window.history.replaceState({}, "", `/${slug}`); renderSeriesLanding(slug); }
+            } else {
+                renderPlayer(slug, 0);
+            }
         } else {
-            renderPlayer(slug, 0);
+            // 2. SAFETY CHECK: Is this an ADULT slug?
+            const adultItem = restrictedContent.find(i => createSlug(i.name) === slug);
+            
+            if (adultItem) {
+                // Yes, it is 18+ content. User is on normal site.
+                // Redirect to 18plus.html
+                window.location.href = `https://ranginx.fun/18plus.html${path}`;
+            } else {
+                render404(); 
+            }
         }
     }
 
@@ -408,26 +416,32 @@ if (schemaEl) {
         loadAds();
         document.getElementById('app').innerHTML = getSkeleton();
         try {
+            // Fetch EVERYTHING (Movies + Series)
             const [m, s] = await Promise.all([
                 getDocs(query(collection(db, 'movies'), where('isPublic', '==', true))),
                 getDocs(query(collection(db, 'series'), where('isPublic', '==', true)))
             ]);
-            allContent = [
-                ...m.docs.map(d => ({id:d.id, ...d.data(), type:'movie'})), 
-                ...s.docs.map(d => ({id:d.id, ...d.data(), type:'series'}))
-            ].sort(()=> 0.5 - Math.random());
+
+            const rawMovies = m.docs.map(d => ({id:d.id, ...d.data(), type:'movie'}));
+            const rawSeries = s.docs.map(d => ({id:d.id, ...d.data(), type:'series'}));
+            const fullList = [...rawMovies, ...rawSeries];
+
+            // SEPARATION LOGIC
+            // 1. Display Content (Normal Only)
+            allContent = fullList.filter(i => i.isAdult !== true).sort(()=> 0.5 - Math.random());
+            
+            // 2. Restricted Content (Adult Only - used for Redirects)
+            restrictedContent = fullList.filter(i => i.isAdult === true);
             
             handleLocation();
         } catch(e) { console.error(e); }
     }
 
-    // --- MANDATORY FIX 7: 404 NOINDEX ---
     function render404() {
         updateSEO({ 
             title: "Page Not Found - Ranginx", 
             desc: "The content you are looking for does not exist.",
-            robots: "noindex, nofollow",
-            schema: null
+            robots: "noindex, nofollow" 
         });
         
         document.getElementById('app').innerHTML = `
@@ -445,10 +459,9 @@ if (schemaEl) {
     function renderHome(filterType = null) {
         updateSEO({ 
             title: "Ranginx - Watch Latest Web Series & Movies", 
-            desc: "Premium streaming destination for 18+ web series and HD movies.",
+            desc: "Premium streaming destination for web series and HD movies.",
             keywords: null, 
-            robots: "index, follow",
-            ogType: "website",
+            robots: "index, follow", 
             schema: { "@type": "WebSite", "name": "Ranginx", "url": "https://ranginx.fun/" }
         });
 
@@ -523,7 +536,7 @@ if (schemaEl) {
         
         const pageTitle = (item.seoTitle && item.seoTitle.trim() !== "") 
             ? item.seoTitle 
-            : `${item.name} Web Series (18+) Watch Online | Ranginx`;
+            : `${item.name} Web Series Watch Online | Ranginx`;
             
         const pageDesc = (item.seoDescription && item.seoDescription.trim() !== "")
             ? item.seoDescription
@@ -532,7 +545,6 @@ if (schemaEl) {
         const robotsStatus = (item.seoIndex === false) ? "noindex, nofollow" : "index, follow";
 
         const breadcrumbSchema = { "@type": "BreadcrumbList", "itemListElement": [ { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ranginx.fun/" }, { "@type": "ListItem", "position": 2, "name": item.name, "item": pageUrl } ] };
-        // FIX: Use TVSeries Schema here, NOT WebSite
         const seriesSchema = { "@type": "TVSeries", "name": item.name, "description": item.description, "image": item.imageUrl, "url": pageUrl, "numberOfEpisodes": item.episodes ? item.episodes.length : 0, "provider": { "@type": "Organization", "name": "Ranginx" } };
 
         updateSEO({ 
@@ -610,15 +622,14 @@ if (schemaEl) {
             const engText = `Watch ${item.name} Episode ${epNum} online in HD quality on Ranginx.`;
             const hindiText = `Ranginx par aap ${item.name} web series ke sabhi episodes free dekh sakte hain.`;
             metaDesc = `${engText} ${hindiText}`.substring(0, 160);
-            tags = [item.name, 'Ranginx', 'Watch Online', 'HD', '18+ Web Series'];
+            tags = [item.name, 'Ranginx', 'Watch Online', 'HD', 'Web Series'];
         }
 
-        const pageTitle = isSeries ? `${item.name} Episode ${epNum} (18+) Watch Online | Ranginx` : `${item.name} (18+) Watch Online | Ranginx`;
+        const pageTitle = isSeries ? `${item.name} Episode ${epNum} Watch Online | Ranginx` : `${item.name} Watch Online | Ranginx`;
         const canonicalUrl = isSeries ? `https://ranginx.fun/${slug}/episode-${epNum}` : `https://ranginx.fun/${slug}`;
         const robotsStatus = item.seoIndex === false ? "noindex, nofollow" : "index, follow";
 
         const breadcrumbSchema = { "@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [ { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ranginx.fun/" }, { "@type": "ListItem", "position": 2, "name": isSeries ? item.name : "Movies", "item": isSeries ? `https://ranginx.fun/${slug}` : "https://ranginx.fun/movies" }, { "@type": "ListItem", "position": 3, "name": isSeries ? `Episode ${epNum}` : item.name, "item": canonicalUrl } ] };
-        // FIX: Use TVEpisode or Movie Schema here
         const mainSchema = isSeries ? { "@type": "TVEpisode", "episodeNumber": epNum, "name": `Episode ${epNum}`, "partOfSeries": { "@type": "TVSeries", "name": item.name, "url": `https://ranginx.fun/${slug}` }, "url": canonicalUrl, "image": item.imageUrl, "description": metaDesc } : { "@type": "Movie", "name": item.name, "url": canonicalUrl, "image": item.imageUrl, "description": metaDesc };
 
         updateSEO({ 
@@ -692,6 +703,7 @@ if (schemaEl) {
         document.getElementById('app').innerHTML = html;
         lucide.createIcons();
         if(ads) { renderAd('player-ad-top', ads.playerHeader || ads.globalHeader); renderAd('player-ad-bot', ads.playerFooter || ads.globalFooter); }
+
         trackPageActivity();
     }
 
@@ -738,6 +750,7 @@ if (schemaEl) {
     window.toggleSidebar = () => { const sb = document.getElementById('sidebar'); document.getElementById('overlay').classList.toggle('hidden'); sb.classList.toggle('-translate-x-full'); };
     document.getElementById('menu-btn').onclick = toggleSidebar;
     
+    // Search Logic
     window.handleSearch = (val) => { 
         if(!val) return; 
         const v = val.toLowerCase().trim();
