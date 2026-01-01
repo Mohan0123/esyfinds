@@ -6,20 +6,34 @@
     <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://*.google.com https://*.googlebot.com;">
     <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
     
-    <title>Ranginx 18+ | Movies & Web Series</title>
-    <meta name="description" content="Watch 18+ Movies and Web Series online. Uncensored content streaming.">
+    <title>Ranginx Streaming Platform</title>
+    <meta name="description" content="Browse and watch movies and web series online on Ranginx.">
+    
     <meta name="robots" content="index, follow, max-image-preview:large">
     
     <meta name="rating" content="RTA-5042-1996-1400-1577-RTA" />
     <meta name="adult" content="true" />
 
-    <link rel="canonical" href="https://ranginx.fun/18plus.html" />
+    <meta property="og:site_name" content="Ranginx">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Ranginx Platform">
+    <meta property="og:description" content="Stream movies and series.">
+    <meta property="og:image" content="https://ranginx.fun/og-image.jpg">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Ranginx Platform">
+    <meta name="twitter:description" content="Stream movies and series.">
+    
+    <link rel="canonical" href="https://ranginx.fun/" />
     <script type="application/ld+json" id="schema-json"></script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
 
@@ -50,6 +64,7 @@
         .glass-nav {
             background: rgba(10, 10, 10, 0.85);
             backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
         .ad-slot { display: none; width: 100%; margin: 30px 0; justify-content: center; overflow: hidden; }
@@ -75,21 +90,25 @@
         }
         #seo-content { color: #9ca3af; font-size: 0.95rem; line-height: 1.8; }
         #seo-content h2 { font-size: 1.5rem; font-weight: 700; color: white; margin-bottom: 1rem; margin-top: 0; }
+        #seo-content h3 { font-size: 1.25rem; font-weight: 600; color: white; margin-bottom: 0.75rem; margin-top: 1.5rem; }
         #seo-content p { margin-bottom: 1rem; }
+        #seo-content strong { color: #e5e5e5; }
+        #seo-content a { color: #e50914; text-decoration: underline; }
     </style>
 </head>
 <body>
+<script src="https://pl28295471.effectivegatecpm.com/f5/76/ea/f576ea86d7e7c1a91485425829516236.js"></script>
 
 <nav class="fixed top-0 w-full h-16 glass-nav z-[60] flex items-center justify-between px-4 lg:px-8 transition-all duration-300">
     <div class="flex items-center gap-6">
         <button id="menu-btn" class="p-2 text-gray-300 hover:text-white transition"><i data-lucide="menu" class="w-6 h-6"></i></button>
         <a href="/" onclick="route(event)" class="text-2xl font-bold tracking-tighter text-white flex items-center gap-1">
-            <span class="text-brand">Rang</span>inx <span class="text-xs bg-brand px-1 rounded ml-1">18+</span>
+            <span class="text-brand">Rang</span>inx
         </a>
     </div>
 
     <div class="hidden md:flex flex-grow max-w-md mx-8 relative">
-        <input type="text" id="desktop-search" placeholder="Search 18+ movies, series..." class="w-full bg-[#141414] border border-[#262626] pl-10 pr-4 py-2.5 rounded-full outline-none text-sm text-white focus:border-brand focus:ring-1 focus:ring-brand transition shadow-inner">
+        <input type="text" id="desktop-search" placeholder="Search movies, series..." class="w-full bg-[#141414] border border-[#262626] pl-10 pr-4 py-2.5 rounded-full outline-none text-sm text-white focus:border-brand focus:ring-1 focus:ring-brand transition shadow-inner">
         <i data-lucide="search" class="w-4 h-4 text-gray-500 absolute left-3.5 top-3"></i>
     </div>
     <button class="md:hidden p-2 text-white" onclick="document.getElementById('mobile-search').classList.toggle('hidden')"><i data-lucide="search" class="w-6 h-6"></i></button>
@@ -105,12 +124,13 @@
 <aside id="sidebar" class="fixed top-16 left-0 h-full w-72 bg-[#0a0a0a] transform -translate-x-full transition-transform duration-300 z-[55] border-r border-[#262626] p-4 flex flex-col">
     <div class="space-y-1">
         <a href="/" onclick="route(event)" class="flex items-center gap-4 px-4 py-3.5 hover:bg-[#141414] rounded-lg text-gray-400 hover:text-brand transition font-medium"><i data-lucide="home" class="w-5 h-5"></i> Home</a>
-        <a href="/movies" onclick="route(event)" class="flex items-center gap-4 px-4 py-3.5 hover:bg-[#141414] rounded-lg text-gray-400 hover:text-white transition font-medium"><i data-lucide="film" class="w-5 h-5"></i> 18+ Movies</a>
-        <a href="/series" onclick="route(event)" class="flex items-center gap-4 px-4 py-3.5 hover:bg-[#141414] rounded-lg text-gray-400 hover:text-white transition font-medium"><i data-lucide="tv" class="w-5 h-5"></i> 18+ Series</a>
+        <a href="/movies" onclick="route(event)" class="flex items-center gap-4 px-4 py-3.5 hover:bg-[#141414] rounded-lg text-gray-400 hover:text-white transition font-medium"><i data-lucide="film" class="w-5 h-5"></i> Movies</a>
+        <a href="/series" onclick="route(event)" class="flex items-center gap-4 px-4 py-3.5 hover:bg-[#141414] rounded-lg text-gray-400 hover:text-white transition font-medium"><i data-lucide="tv" class="w-5 h-5"></i> Web Series</a>
     </div>
     <div class="h-px bg-[#262626] my-4 mx-2"></div>
     <div class="space-y-1">
         <button onclick="openModal('dmca')" class="w-full flex items-center gap-4 px-4 py-3 hover:bg-[#141414] rounded-lg text-gray-400 hover:text-white text-left text-sm"><i data-lucide="shield-alert" class="w-4 h-4"></i> DMCA</button>
+        <button onclick="openModal('privacy')" class="w-full flex items-center gap-4 px-4 py-3 hover:bg-[#141414] rounded-lg text-gray-400 hover:text-white text-left text-sm"><i data-lucide="lock" class="w-4 h-4"></i> Privacy</button>
     </div>
 </aside>
 <div id="overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[50] hidden transition-opacity" onclick="toggleSidebar()"></div>
@@ -125,21 +145,12 @@
     </div>
 </div>
 
-<div id="age-modal" class="fixed inset-0 z-[999] bg-black flex items-center justify-center p-4 hidden">
-    <div class="bg-[#141414] w-full max-w-md rounded-2xl border border-[#262626] shadow-2xl p-8 text-center animate-fade">
-        <div class="mb-6 flex justify-center">
-            <div class="bg-red-500/10 p-4 rounded-full">
-                <span class="text-4xl font-bold text-brand">18+</span>
-            </div>
-        </div>
-        <h2 class="text-2xl font-bold text-white mb-2">Age Verification</h2>
-        <p class="text-gray-400 mb-8">This page contains explicit adult content (Movies & Series). You must be 18+.</p>
-        <div class="flex flex-col gap-3">
-            <button onclick="confirmAge()" class="w-full bg-brand hover:bg-red-700 text-white font-bold py-3.5 rounded-xl transition transform hover:scale-[1.02]">I am 18+ - Enter</button>
-            <button onclick="exitSite()" class="w-full bg-[#262626] hover:bg-[#333] text-gray-300 font-medium py-3.5 rounded-xl transition">Exit</button>
-        </div>
+<noscript>
+    <div style="padding: 20px; text-align: center; color: #fff; background: #000;">
+        <h1>Ranginx</h1>
+        <p>Streaming Platform.</p>
     </div>
-</div>
+</noscript>
 
 <main id="app" class="pt-16 min-h-screen"></main>
 
@@ -156,40 +167,244 @@
         appId: "1:497431501409:web:0e03fb6744c24e119c2820"
     }));
 
-    let allContent = []; // Stores displayed content (18+)
-    let restrictedContent = []; // Stores restricted content (Normal) for redirect logic
+    let allContent = [];
+    let restrictedContent = [];
     let ads = {};
 
-    // --- 18+ Logic ---
-    window.checkAge = () => {
-        const isAdult = localStorage.getItem('ranginx_adult_confirm');
-        if (isAdult !== 'true') { document.getElementById('age-modal').classList.remove('hidden'); }
-    };
-    window.confirmAge = () => { localStorage.setItem('ranginx_adult_confirm', 'true'); document.getElementById('age-modal').classList.add('hidden'); };
-    window.exitSite = () => { window.location.href = "https://www.google.com"; };
+    function isAnalyticsSafe() {
+        const userAgent = navigator.userAgent.toLowerCase();
+        const path = location.pathname;
+        const restrictedPaths = ['/admin', '/login', '/dashboard', '/editor', '/sitemap.xml'];
+        if (restrictedPaths.some(p => path.startsWith(p))) return false;
+        const botPatterns = ['bot', 'crawler', 'spider', 'googlebot', 'bingbot', 'slurp', 'duckduckbot', 'baiduspider', 'yandexbot'];
+        if (botPatterns.some(bot => userAgent.includes(bot))) return false;
+        if (navigator.webdriver) return false;
+        return true;
+    }
+
+    function incrementViewSafe(collectionName, docId, uniqueKey) {
+        if (!isAnalyticsSafe()) return;
+        try {
+            const sessionKey = `viewed_${uniqueKey}`; 
+            if (!sessionStorage.getItem(sessionKey)) {
+                updateDoc(doc(db, collectionName, docId), { views: increment(1) }).catch(console.error);
+                sessionStorage.setItem(sessionKey, '1');
+            }
+        } catch (e) { }
+    }
+
+    let currentTrackId = null;
+    let trackStartTime = Date.now();
+    
+    async function trackPageActivity() {
+        const PAGE_TYPE = window.location.pathname.includes('18plus.html')
+  ? 'adult'
+  : 'normal';
+        if (!isAnalyticsSafe()) return;
+        const now = new Date();
+        const dateStr = now.toISOString().split('T')[0];
+        const monthStr = dateStr.slice(0, 7);
+
+        if (currentTrackId) {
+            const timeSpentMs = Date.now() - trackStartTime;
+            const timeSpentSeconds = Math.round(timeSpentMs / 1000);
+            if (timeSpentSeconds >= 3 && timeSpentSeconds <= 3600) {
+                const validTimeMs = timeSpentSeconds * 1000; 
+                try {
+                    updateDoc(doc(db, "pageStats", currentTrackId), { totalTime: increment(validTimeMs) }).catch(()=>{});
+                    setDoc(doc(db, "pageStatsDaily", `${dateStr}_${currentTrackId}`), { pageId: currentTrackId, date: dateStr, totalTime: increment(validTimeMs) }, { merge: true }).catch(()=>{});
+                    setDoc(doc(db, "pageStatsMonthly", `${monthStr}_${currentTrackId}`), { pageId: currentTrackId, month: monthStr, totalTime: increment(validTimeMs) }, { merge: true }).catch(()=>{});
+                } catch (e) {}
+            }
+        }
+
+        const path = window.location.pathname;
+        const parts = path.split('/').filter(p => p);
+        
+        let newId = 'home';
+        let pageTitle = 'Home Page';
+
+        if (parts.length > 0 && parts[0] !== 'movies' && parts[0] !== 'series') {
+            const slug = parts[0];
+            const item = allContent.find(i => createSlug(i.name) === slug);
+            if (item) {
+                pageTitle = item.name;
+                if (item.type === 'movie') {
+                    newId = `movie_${slug}`;
+                } else if (item.type === 'series') {
+                    if (parts[1]?.startsWith('episode-')) {
+                            const epNum = parts[1].replace('episode-', '');
+                            newId = `episode_${slug}_${epNum}`;
+                            pageTitle = `${item.name} - Ep ${epNum}`;
+                    } else {
+                            newId = `series_${slug}`;
+                    }
+                }
+            } else {
+                newId = `page_${slug}`;
+                pageTitle = slug.charAt(0).toUpperCase() + slug.slice(1);
+            }
+        }
+
+        const sessionViewKey = `analytics_${newId}`;
+        if (!sessionStorage.getItem(sessionViewKey)) {
+            try {
+                sessionStorage.setItem(sessionViewKey, '1');
+                setDoc(doc(db, "pageStats", newId), { 
+                    views: increment(1), 
+                    lastVisit: serverTimestamp(),
+                    title: pageTitle, 
+                    pageType: PAGE_TYPE,
+                }, { merge: true });
+
+                setDoc(doc(db, "pageStatsDaily", `${dateStr}_${newId}`), { 
+                    pageId: newId, 
+                    date: dateStr, 
+                    views: increment(1),
+                    title: pageTitle,
+                    pageType: PAGE_TYPE,
+                }, { merge: true });
+
+                setDoc(doc(db, "pageStatsMonthly", `${monthStr}_${newId}`), { 
+                    pageId: newId, 
+                    month: monthStr, 
+                    views: increment(1),
+                    title: pageTitle,
+                    pageType: PAGE_TYPE,
+                }, { merge: true });
+            } catch (e) {}
+        }
+
+        currentTrackId = newId;
+        trackStartTime = Date.now();
+    }
+
+    window.addEventListener("beforeunload", () => {
+        if (currentTrackId && isAnalyticsSafe()) {
+            const timeSpentSeconds = Math.round((Date.now() - trackStartTime) / 1000);
+            if (timeSpentSeconds >= 3 && timeSpentSeconds <= 3600) { }
+        }
+    });
 
     function updateSEO(meta) {
         document.title = meta.title;
+
         let descMeta = document.querySelector('meta[name="description"]');
         if (!descMeta) { descMeta = document.createElement('meta'); descMeta.setAttribute('name', 'description'); document.head.appendChild(descMeta); }
         descMeta.setAttribute("content", meta.desc);
+
+        let robotsMeta = document.querySelector('meta[name="robots"]');
+        if (!robotsMeta) { robotsMeta = document.createElement('meta'); robotsMeta.setAttribute('name', 'robots'); document.head.appendChild(robotsMeta); }
+        robotsMeta.setAttribute("content", meta.robots || "index, follow, max-image-preview:large");
+
+        let kwMeta = document.querySelector('meta[name="keywords"]');
+        if (meta.keywords && meta.keywords.length > 0) {
+            if (!kwMeta) { kwMeta = document.createElement('meta'); kwMeta.setAttribute('name', 'keywords'); document.head.appendChild(kwMeta); }
+            kwMeta.setAttribute("content", Array.isArray(meta.keywords) ? meta.keywords.join(', ') : meta.keywords);
+        } else if (kwMeta) kwMeta.remove();
+
+        let cleanUrl = meta.url || `https://ranginx.fun${window.location.pathname}`;
+        cleanUrl = cleanUrl.split('?')[0].split('#')[0];
+        if (cleanUrl.length > 20 && cleanUrl.endsWith('/')) {
+            cleanUrl = cleanUrl.slice(0, -1);
+        }
+
+        let linkCanon = document.querySelector('link[rel="canonical"]');
+        if(!linkCanon) { linkCanon = document.createElement('link'); linkCanon.setAttribute('rel', 'canonical'); document.head.appendChild(linkCanon); }
+        linkCanon.setAttribute("href", cleanUrl);
+
+        const setMeta = (selector, attr, value) => {
+            let el = document.querySelector(selector);
+            if (!el) { el = document.createElement('meta'); if(selector.includes('property')) el.setAttribute('property', selector.split('"')[1]); if(selector.includes('name')) el.setAttribute('name', selector.split('"')[1]); document.head.appendChild(el); }
+            el.setAttribute(attr, value);
+        };
+
+        setMeta('meta[property="og:title"]', 'content', meta.title);
+        setMeta('meta[property="og:description"]', 'content', meta.desc);
+        setMeta('meta[property="og:url"]', 'content', cleanUrl);
+        setMeta('meta[property="og:type"]', 'content', meta.ogType || "website");
+        if (meta.image) setMeta('meta[property="og:image"]', 'content', meta.image);
+        
+        setMeta('meta[name="twitter:title"]', 'content', meta.title);
+        setMeta('meta[name="twitter:description"]', 'content', meta.desc);
+        if (meta.image) setMeta('meta[name="twitter:image"]', 'content', meta.image);
+
+        const schemaData = { 
+            "@context": "https://schema.org", 
+            "@graph": Array.isArray(meta.schema) ? meta.schema : (meta.schema ? [meta.schema] : [])
+        };
+        document.getElementById('schema-json').textContent = JSON.stringify(schemaData);
     }
 
     function generateFallbackSeoContent(item) {
-        return `<h2>Watch ${item.name} Online (18+)</h2><p>Stream uncensored content of <strong>${item.name}</strong> on Ranginx.</p>`;
+        const safeName = item.name.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        return `
+            <h2>Watch ${safeName} Web Series Online on Ranginx</h2>
+            <p>Stream the latest episodes of <strong>${safeName}</strong> in high definition. Ranginx offers a seamless viewing experience for this popular series, allowing you to watch the complete season without interruptions.</p>
+            <h3>Storyline</h3>
+            <p>${item.description || `Discover the captivating story of <strong>${safeName}</strong>. With intense drama and engaging character arcs, this series has become a favorite among viewers.`}</p>
+            <p>We provide <strong>free HD streaming</strong>. Whether you are looking for <strong>${safeName} Episode 1</strong> or the season finale, you can watch it online on Ranginx.</p>
+        `;
     }
-    function getSeoContentHTML(item) { return (item.seoContent && item.seoContent.trim() !== "") ? item.seoContent : generateFallbackSeoContent(item); }
+
+    function getSeoContentHTML(item) {
+        if (item.seoContent && item.seoContent.trim() !== "") {
+            return item.seoContent; 
+        }
+        return generateFallbackSeoContent(item);
+    }
 
     window.route = (event) => { event = event || window.event; event.preventDefault(); window.history.pushState({}, "", event.currentTarget.href); handleLocation(); };
     window.onpopstate = handleLocation;
 
-    // --- MAIN INIT (FETCH & SEPARATE DATA) ---
+    async function handleLocation() {
+        const path = window.location.pathname;
+        const parts = path.split('/').filter(p => p);
+        
+        document.getElementById('sidebar').classList.add('-translate-x-full');
+        document.getElementById('overlay').classList.add('hidden');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+        if (window.location.pathname.length > 1 && window.location.pathname.endsWith('/')) {
+            window.history.replaceState({}, "", window.location.pathname.slice(0, -1));
+        }
+
+        if (parts.length === 0 || path === '/index.html' || path === '/') { renderHome(); return; }
+        if (parts[0] === 'movies') { renderHome('movie'); return; }
+        if (parts[0] === 'series') { renderHome('series'); return; }
+
+        const slug = parts[0];
+        
+        const item = allContent.find(i => createSlug(i.name) === slug);
+
+        if (item) {
+            if (item.type === 'series') {
+                if (parts.length === 1) renderSeriesLanding(slug);
+                else if (parts.length === 2 && parts[1].startsWith('episode-')) {
+                    const epNum = parseInt(parts[1].replace('episode-', ''));
+                    if (Number.isInteger(epNum) && epNum > 0 && item.episodes && epNum <= item.episodes.length) renderPlayer(slug, epNum - 1);
+                    else { window.history.replaceState({}, "", `/${slug}`); renderSeriesLanding(slug); }
+                } else { window.history.replaceState({}, "", `/${slug}`); renderSeriesLanding(slug); }
+            } else {
+                renderPlayer(slug, 0);
+            }
+        } else {
+            const adultItem = restrictedContent.find(i => createSlug(i.name) === slug);
+            
+            if (adultItem) {
+                window.location.href = `https://ranginx.fun/18plus.html${path}`;
+            } else {
+                render404(); 
+            }
+        }
+    }
+
+    const getSkeleton = () => `<div class="px-4 lg:px-8 py-8 max-w-[1600px] mx-auto"><div class="w-full h-[40vh] md:h-[50vh] bg-[#141414] rounded-2xl animate-pulse mb-10"></div><div class="grid grid-cols-2 md:grid-cols-3 gap-4">${Array(6).fill(0).map(() => `<div class="aspect-video bg-[#141414] rounded-xl animate-pulse"></div>`).join('')}</div></div>`;
+
     async function init() {
-        window.checkAge(); // Show 18+ Modal
         loadAds();
         document.getElementById('app').innerHTML = getSkeleton();
         try {
-            // Fetch ALL public content to handle redirects correctly
             const [m, s] = await Promise.all([
                 getDocs(query(collection(db, 'movies'), where('isPublic', '==', true))),
                 getDocs(query(collection(db, 'series'), where('isPublic', '==', true)))
@@ -199,85 +414,41 @@
             const rawSeries = s.docs.map(d => ({id:d.id, ...d.data(), type:'series'}));
             const fullList = [...rawMovies, ...rawSeries];
 
-            // SEPARATION LOGIC
-            // 1. Content for THIS site (18+ Only)
-            allContent = fullList.filter(i => i.isAdult === true).sort(()=> 0.5 - Math.random());
+            allContent = fullList.filter(i => i.isAdult !== true).sort(()=> 0.5 - Math.random());
             
-            // 2. Content that belongs to the OTHER site (Normal)
-            // Used to redirect user if they land on a normal link here
-            restrictedContent = fullList.filter(i => i.isAdult !== true);
+            restrictedContent = fullList.filter(i => i.isAdult === true);
             
             handleLocation();
-        } catch(e) { 
-            console.error("Error loading content:", e); 
-        }
+        } catch(e) { console.error(e); }
     }
-
-    // --- ROUTING & REDIRECT LOGIC ---
-    async function handleLocation() {
-        const path = window.location.pathname;
-        const parts = path.split('/').filter(p => p);
-        
-        document.getElementById('sidebar').classList.add('-translate-x-full');
-        document.getElementById('overlay').classList.add('hidden');
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-
-        if (window.location.pathname.endsWith('/') && window.location.pathname.length > 1) {
-            window.history.replaceState({}, "", window.location.pathname.slice(0, -1));
-        }
-
-        // Home Page Logic
-        if (parts.length === 0 || path === '/index.html' || path === '/' || path.includes('18plus')) { 
-            renderHome(); 
-            return; 
-        }
-
-        if (parts[0] === 'movies') { renderHome('movie'); return; }
-        if (parts[0] === 'series') { renderHome('series'); return; }
-
-        const slug = parts[0];
-
-        // 1. Check if content exists in ADULT list (Correct Content)
-        const item = allContent.find(i => createSlug(i.name) === slug);
-
-        if (item) {
-            // Found! Render content
-            if (item.type === 'series') {
-                if (parts.length === 1) renderSeriesLanding(slug);
-                else if (parts.length === 2 && parts[1].startsWith('episode-')) {
-                    const epNum = parseInt(parts[1].replace('episode-', ''));
-                    if (Number.isInteger(epNum) && epNum > 0 && item.episodes && epNum <= item.episodes.length) renderPlayer(slug, epNum - 1);
-                    else renderSeriesLanding(slug);
-                } else renderSeriesLanding(slug);
-            } else {
-                renderPlayer(slug, 0); // Movie
-            }
-        } else {
-            // 2. SAFETY CHECK: Is this a NORMAL content slug?
-            const normalItem = restrictedContent.find(i => createSlug(i.name) === slug);
-            
-            if (normalItem) {
-                // Yes, it's normal content. User shouldn't be here.
-                // Redirect to MAIN site (remove /18plus.html if present in logic, adjust domain path)
-                // Assuming main site is root: https://ranginx.fun/slug
-                // We construct the new URL cleanly
-                const newPath = path.replace('/18plus.html', ''); // Remove filename if present
-                window.location.href = `https://ranginx.fun${newPath}`;
-            } else {
-                // Not found in either list
-                render404(); 
-            }
-        }
-    }
-
-    const getSkeleton = () => `<div class="px-4 lg:px-8 py-8 max-w-[1600px] mx-auto"><div class="w-full h-[40vh] md:h-[50vh] bg-[#141414] rounded-2xl animate-pulse mb-10"></div><div class="grid grid-cols-2 md:grid-cols-3 gap-4">${Array(6).fill(0).map(() => `<div class="aspect-video bg-[#141414] rounded-xl animate-pulse"></div>`).join('')}</div></div>`;
 
     function render404() {
-        document.getElementById('app').innerHTML = `<div class="min-h-screen flex flex-col items-center justify-center text-center px-4"><h1 class="text-6xl font-bold text-brand mb-4">404</h1><p class="text-xl text-gray-300 mb-8">Content Not Found.</p><a href="/" onclick="route(event)" class="bg-white text-black px-6 py-3 rounded-lg font-bold">Go Back Home</a></div>`;
+        updateSEO({ 
+            title: "Page Not Found - Ranginx", 
+            desc: "The content you are looking for does not exist.",
+            robots: "noindex, nofollow" 
+        });
+        
+        document.getElementById('app').innerHTML = `
+            <div class="min-h-screen flex flex-col items-center justify-center text-center px-4">
+                <h1 class="text-6xl font-bold text-brand mb-4">404</h1>
+                <p class="text-xl text-gray-300 mb-8">Oops! We couldn't find that series or movie.</p>
+                <a href="/" onclick="route(event)" class="bg-white text-black px-6 py-3 rounded-lg font-bold hover:bg-gray-200 transition">
+                    Go Back Home
+                </a>
+            </div>
+            ${getFooter()}
+        `;
     }
 
     function renderHome(filterType = null) {
-        updateSEO({ title: "Ranginx 18+ - Uncensored Movies & Series", desc: "Watch 18+ movies and web series online." });
+        updateSEO({ 
+            title: "Ranginx - Watch Latest Web Series & Movies", 
+            desc: "Premium streaming destination for web series and HD movies.",
+            keywords: null, 
+            robots: "index, follow", 
+            schema: { "@type": "WebSite", "name": "Ranginx", "url": "https://ranginx.fun/" }
+        });
 
         const data = filterType ? allContent.filter(i => i.type === filterType) : allContent;
         const featured = data.find(i => i.isFeatured === true) || (data.length > 0 ? data[0] : null);
@@ -286,9 +457,9 @@
         let html = `
             <div class="px-4 md:px-8 py-6 max-w-[1600px] mx-auto min-h-screen">
                 <div class="flex gap-3 overflow-x-auto pb-6 sticky top-16 bg-[#0a0a0a] z-20 py-2 no-scrollbar">
-                    <a href="/" onclick="route(event)" class="${!filterType?'bg-white text-black':'bg-[#141414] text-gray-400 hover:text-white border border-[#262626]'} px-6 py-2 rounded-full text-sm font-bold whitespace-nowrap transition shadow-lg">All 18+</a>
-                    <a href="/series" onclick="route(event)" class="${filterType==='series'?'bg-white text-black':'bg-[#141414] text-gray-400 hover:text-white border border-[#262626]'} px-6 py-2 rounded-full text-sm font-bold whitespace-nowrap transition shadow-lg">18+ Series</a>
-                    <a href="/movies" onclick="route(event)" class="${filterType==='movie'?'bg-white text-black':'bg-[#141414] text-gray-400 hover:text-white border border-[#262626]'} px-6 py-2 rounded-full text-sm font-bold whitespace-nowrap transition shadow-lg">18+ Movies</a>
+                    <a href="/" onclick="route(event)" class="${!filterType?'bg-white text-black':'bg-[#141414] text-gray-400 hover:text-white border border-[#262626]'} px-6 py-2 rounded-full text-sm font-bold whitespace-nowrap transition shadow-lg">All</a>
+                    <a href="/series" onclick="route(event)" class="${filterType==='series'?'bg-white text-black':'bg-[#141414] text-gray-400 hover:text-white border border-[#262626]'} px-6 py-2 rounded-full text-sm font-bold whitespace-nowrap transition shadow-lg">Series</a>
+                    <a href="/movies" onclick="route(event)" class="${filterType==='movie'?'bg-white text-black':'bg-[#141414] text-gray-400 hover:text-white border border-[#262626]'} px-6 py-2 rounded-full text-sm font-bold whitespace-nowrap transition shadow-lg">Movies</a>
                 </div>
 
                 ${featured && !filterType ? `
@@ -296,10 +467,12 @@
                     <div class="absolute inset-0 bg-cover bg-center transition duration-700 group-hover:scale-105" style="background-image: url('${featured.imageUrl}');"></div>
                     <div class="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent"></div>
                     <div class="absolute bottom-0 left-0 p-6 md:p-12 w-full md:w-2/3">
-                        <span class="bg-brand text-white text-[10px] md:text-xs font-bold px-2 py-1 rounded uppercase tracking-wider mb-3 inline-block shadow-lg shadow-red-900/50">18+ Featured</span>
+                        <span class="bg-brand text-white text-[10px] md:text-xs font-bold px-2 py-1 rounded uppercase tracking-wider mb-3 inline-block shadow-lg shadow-red-900/50">Featured</span>
                         <h1 class="text-3xl md:text-5xl font-bold text-white mb-4 leading-tight drop-shadow-lg">${featured.name}</h1>
-                        <p class="text-gray-300 text-sm md:text-base line-clamp-2 mb-6 max-w-lg">${featured.description || 'Watch strict 18+ content now.'}</p>
-                        <a href="/${createSlug(featured.name)}" onclick="route(event)" class="inline-flex items-center gap-2 bg-white text-black px-6 py-3 rounded-lg font-bold hover:bg-gray-200 transition transform hover:scale-105"><i data-lucide="play" class="w-5 h-5 fill-black"></i> Watch Now</a>
+                        <p class="text-gray-300 text-sm md:text-base line-clamp-2 mb-6 max-w-lg">${featured.description || 'Watch this exclusive content now in Full HD.'}</p>
+                        <a href="/${createSlug(featured.name)}" onclick="route(event)" class="inline-flex items-center gap-2 bg-white text-black px-6 py-3 rounded-lg font-bold hover:bg-gray-200 transition transform hover:scale-105">
+                            <i data-lucide="play" class="w-5 h-5 fill-black"></i> Watch Now
+                        </a>
                     </div>
                 </div>` : ''}
                 <div class="grid grid-cols-2 md:grid-cols-3 gap-4 gap-y-8 animate-fade">`;
@@ -313,27 +486,63 @@
                 <a href="/${slug}" onclick="route(event)" class="group block relative">
                     <div class="relative aspect-video rounded-xl overflow-hidden mb-3 shadow-lg bg-[#141414] border border-[#222]">
                         <img src="${item.imageUrl}" class="w-full h-full object-cover group-hover:scale-110 transition duration-500" loading="lazy" alt="${item.name}">
-                        <div class="absolute top-2 right-2 bg-red-600 text-white text-[10px] font-bold px-2 py-1 rounded">18+</div>
-                        <div class="absolute bottom-2 left-2 bg-black/60 text-white text-[10px] font-bold px-2 py-1 rounded border border-white/10 uppercase">${item.type==='series'?'TV':'MOV'}</div>
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center backdrop-blur-[2px]">
+                             <div class="bg-brand/90 p-3 rounded-full shadow-xl transform scale-50 group-hover:scale-100 transition duration-300"><i data-lucide="play" class="w-6 h-6 fill-white text-white"></i></div>
+                        </div>
+                        <div class="absolute top-2 right-2 bg-black/60 backdrop-blur-md text-white text-[10px] font-bold px-2 py-1 rounded border border-white/10 uppercase">${item.type==='series'?'TV':'MOV'}</div>
                     </div>
                     <div>
                         <h3 class="text-sm font-semibold text-gray-200 line-clamp-1 group-hover:text-brand transition">${item.name}</h3>
-                        <div class="flex items-center justify-between mt-1"><span class="text-[11px] text-gray-500">2025</span><span class="text-[10px] border border-gray-700 text-gray-400 px-1 rounded">HD</span></div>
+                        <div class="flex items-center justify-between mt-1">
+                            <span class="text-[11px] text-gray-500">2025</span>
+                            <span class="text-[10px] border border-gray-700 text-gray-400 px-1 rounded">HD</span>
+                        </div>
                     </div>
                 </a>`;
-            if ((index + 1) % 8 === 0) { html += `<div class="col-span-full"><div id="feed-ad-${adCount}" class="ad-slot"></div></div>`; adCount++; }
+            if ((index + 1) % 8 === 0) {
+                html += `<div class="col-span-full"><div id="feed-ad-${adCount}" class="ad-slot"></div></div>`;
+                adCount++;
+            }
         });
 
         html += `</div></div>${getFooter()}`;
         document.getElementById('app').innerHTML = html;
         lucide.createIcons();
-        if(ads.globalFooter) for(let i=0; i<adCount; i++) renderAd(`feed-ad-${i}`, ads.globalFooter);
+        setTimeout(() => { if(ads.globalFooter) for(let i=0; i<adCount; i++) renderAd(`feed-ad-${i}`, ads.globalFooter); }, 500);
+
+        trackPageActivity();
     }
 
     function renderSeriesLanding(slug) {
         const item = allContent.find(i => createSlug(i.name) === slug);
         if(!item) return render404(); 
-        updateSEO({ title: `${item.name} (18+) | Ranginx`, desc: item.description });
+
+        const pageUrl = `https://ranginx.fun/${slug}`;
+        
+        const pageTitle = (item.seoTitle && item.seoTitle.trim() !== "") 
+            ? item.seoTitle 
+            : `${item.name} Web Series Watch Online | Ranginx`;
+            
+        const pageDesc = (item.seoDescription && item.seoDescription.trim() !== "")
+            ? item.seoDescription
+            : `Watch ${item.name} web series online. Full cast, synopsis, and all episodes available in HD on Ranginx.`;
+
+        const robotsStatus = (item.seoIndex === false) ? "noindex, nofollow" : "index, follow";
+
+        const breadcrumbSchema = { "@type": "BreadcrumbList", "itemListElement": [ { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ranginx.fun/" }, { "@type": "ListItem", "position": 2, "name": item.name, "item": pageUrl } ] };
+        const seriesSchema = { "@type": "TVSeries", "name": item.name, "description": item.description, "image": item.imageUrl, "url": pageUrl, "numberOfEpisodes": item.episodes ? item.episodes.length : 0, "provider": { "@type": "Organization", "name": "Ranginx" } };
+
+        updateSEO({ 
+            title: pageTitle,
+            desc: pageDesc,
+            image: item.imageUrl, 
+            url: pageUrl, 
+            keywords: null, 
+            robots: robotsStatus,
+            ogType: "video.tv_show", 
+            schema: [seriesSchema, breadcrumbSchema] 
+        });
+        
         const seoContentHTML = getSeoContentHTML(item);
 
         let html = `
@@ -343,27 +552,37 @@
                 <div class="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/80 to-transparent"></div>
                 <div class="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/60 to-transparent"></div>
                 <div class="absolute bottom-0 left-0 w-full p-6 lg:p-12 flex flex-col md:flex-row gap-8 items-end max-w-[1600px] mx-auto">
-                    <div class="hidden md:block w-48 lg:w-64 flex-shrink-0 rounded-lg overflow-hidden shadow-2xl border border-[#262626]"><img src="${item.imageUrl}" class="w-full h-full object-cover"></div>
+                    <div class="hidden md:block w-48 lg:w-64 flex-shrink-0 rounded-lg overflow-hidden shadow-2xl border border-[#262626]"><img src="${item.imageUrl}" class="w-full h-full object-cover" alt="${item.name} poster"></div>
                     <div class="mb-4">
-                        <span class="bg-red-600 text-white text-xs font-bold px-2 py-1 rounded uppercase mb-3 inline-block">18+ Only</span>
-                        <h1 class="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">${item.name}</h1>
-                        <p class="text-gray-300 text-sm md:text-lg max-w-2xl line-clamp-3 mb-6">${item.description || 'Stream strictly 18+ content.'}</p>
-                        <div class="flex flex-wrap gap-4"><a href="/${slug}/episode-1" onclick="route(event)" class="bg-brand hover:bg-red-700 text-white px-8 py-3.5 rounded-lg font-bold flex items-center gap-2 transition transform hover:scale-105"><i data-lucide="play-circle" class="w-5 h-5"></i> Start Watching</a></div>
+                        <span class="bg-brand text-white text-xs font-bold px-2 py-1 rounded uppercase mb-3 inline-block">Web Series</span>
+                        <h1 class="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4 leading-tight">
+                            ${item.name} <span class="block text-2xl md:text-3xl text-gray-300 font-medium mt-2">Web Series – Watch Online on Ranginx</span>
+                        </h1>
+                        <p class="text-gray-300 text-sm md:text-lg max-w-2xl line-clamp-3 mb-6">${item.description || 'Stream this exclusive web series in Full HD quality.'}</p>
+                        <div class="flex flex-wrap gap-4"><a href="/${slug}/episode-1" onclick="route(event)" class="bg-brand hover:bg-red-700 text-white px-8 py-3.5 rounded-lg font-bold flex items-center gap-2 transition transform hover:scale-105"><i data-lucide="play-circle" class="w-5 h-5"></i> Start Watching Episode 1</a></div>
                     </div>
                 </div>
             </div>
             <div class="max-w-[1600px] mx-auto px-6 py-12">
+                <div class="flex items-center justify-between mb-8 border-b border-[#262626] pb-4"><h2 class="text-2xl font-bold text-white flex items-center gap-2"><i data-lucide="layers" class="text-brand"></i> All Episodes <span class="text-gray-500 text-lg font-normal">(${item.episodes ? item.episodes.length : 0})</span></h2></div>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-12">
                     ${item.episodes ? item.episodes.map((ep, index) => `
                         <a href="/${slug}/episode-${index+1}" onclick="route(event)" class="group bg-[#141414] border border-[#262626] hover:border-brand rounded-xl overflow-hidden transition hover:shadow-lg hover:shadow-brand/10 flex md:block">
                             <div class="w-32 md:w-full md:aspect-video relative overflow-hidden bg-black flex-shrink-0"><img src="${item.imageUrl}" class="w-full h-full object-cover opacity-60 group-hover:opacity-100 transition duration-500"><div class="absolute inset-0 flex items-center justify-center"><div class="bg-white/10 backdrop-blur-sm p-2 rounded-full group-hover:bg-brand group-hover:text-white transition"><i data-lucide="play" class="w-5 h-5 fill-current"></i></div></div></div>
-                            <div class="p-4 flex flex-col justify-center"><h3 class="font-bold text-white group-hover:text-brand transition text-lg">Episode ${index + 1}</h3><p class="text-gray-500 text-[10px] mt-1">18+ Uncensored</p></div>
-                        </a>`).join('') : '<p class="text-gray-500">No episodes.</p>'}
+                            <div class="p-4 flex flex-col justify-center">
+                                <h3 class="font-bold text-white group-hover:text-brand transition text-lg">Episode ${index + 1}</h3>
+                                ${ep.title ? `<p class="text-gray-400 text-xs mt-1 font-medium">${ep.title}</p>` : ''}
+                                <p class="text-gray-500 text-[10px] mt-1">Watch Online in HD</p>
+                            </div>
+                        </a>`).join('') : '<p class="text-gray-500">No episodes uploaded yet.</p>'}
                 </div>
-                <section class="seo-content-wrapper"><article id="seo-content">${seoContentHTML}</article></section>
+                <section class="seo-content-wrapper">
+                    <article id="seo-content">${seoContentHTML}</article>
+                </section>
             </div>${getFooter()}`;
         document.getElementById('app').innerHTML = html;
         lucide.createIcons();
+        trackPageActivity();
     }
 
     function renderPlayer(slug, urlEpIndex = null) {
@@ -377,103 +596,159 @@
             else { window.history.replaceState({}, "", `/${slug}`); renderSeriesLanding(slug); return; }
         }
 
-        const videoSrc = (item.type === 'movie') ? item.movieUrl : (item.episodes?.length ? item.episodes[activeIndex].url : "");
-        const pageTitle = isSeries ? `${item.name} Ep ${activeIndex+1} (18+)` : `${item.name} (18+) Movie`;
-        updateSEO({ title: pageTitle, desc: "Watch 18+ content." });
+        const epNum = activeIndex + 1;
+        const currentEp = isSeries ? item.episodes[activeIndex] : null;
+
+        let metaDesc, tags;
+        if (isSeries && currentEp && currentEp.description) {
+            metaDesc = currentEp.description;
+            tags = [item.name, 'Ranginx', `Episode ${epNum}`];
+        } else {
+            const engText = `Watch ${item.name} Episode ${epNum} online in HD quality on Ranginx.`;
+            const hindiText = `Ranginx par aap ${item.name} web series ke sabhi episodes free dekh sakte hain.`;
+            metaDesc = `${engText} ${hindiText}`.substring(0, 160);
+            tags = [item.name, 'Ranginx', 'Watch Online', 'HD', 'Web Series'];
+        }
+
+        const pageTitle = isSeries ? `${item.name} Episode ${epNum} Watch Online | Ranginx` : `${item.name} Watch Online | Ranginx`;
+        const canonicalUrl = isSeries ? `https://ranginx.fun/${slug}/episode-${epNum}` : `https://ranginx.fun/${slug}`;
+        const robotsStatus = item.seoIndex === false ? "noindex, nofollow" : "index, follow";
+
+        const breadcrumbSchema = { "@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [ { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://ranginx.fun/" }, { "@type": "ListItem", "position": 2, "name": isSeries ? item.name : "Movies", "item": isSeries ? `https://ranginx.fun/${slug}` : "https://ranginx.fun/movies" }, { "@type": "ListItem", "position": 3, "name": isSeries ? `Episode ${epNum}` : item.name, "item": canonicalUrl } ] };
+        const mainSchema = isSeries ? { "@type": "TVEpisode", "episodeNumber": epNum, "name": `Episode ${epNum}`, "partOfSeries": { "@type": "TVSeries", "name": item.name, "url": `https://ranginx.fun/${slug}` }, "url": canonicalUrl, "image": item.imageUrl, "description": metaDesc } : { "@type": "Movie", "name": item.name, "url": canonicalUrl, "image": item.imageUrl, "description": metaDesc };
+
+        updateSEO({ 
+            title: pageTitle, 
+            desc: metaDesc, 
+            image: item.imageUrl, 
+            url: canonicalUrl, 
+            keywords: tags, 
+            robots: robotsStatus, 
+            ogType: "video.other", 
+            schema: [mainSchema, breadcrumbSchema] 
+        });
+        
+        const seoContentHTML = getSeoContentHTML(item);
+        
+        let internalLinksHtml = '';
+        if (isSeries) {
+            internalLinksHtml += `
+            <div class="mt-6 pt-6 border-t border-[#262626] flex flex-col gap-3">
+                <p class="text-xs text-gray-500 font-bold uppercase tracking-widest mb-1">More Actions</p>
+                <a href="/${slug}" onclick="route(event)" title="Back to ${item.name} All Episodes" class="text-brand hover:text-white hover:underline transition text-sm flex items-center gap-2">
+                    <i data-lucide="arrow-left" class="w-4 h-4"></i> Watch All Episodes of <strong>${item.name}</strong>
+                </a>
+                ${(item.episodes && activeIndex + 1 < item.episodes.length) ? `<a href="/${slug}/episode-${epNum + 1}" onclick="route(event)" class="text-gray-300 hover:text-brand hover:underline font-bold text-sm flex items-center gap-2 bg-[#1a1a1a] border border-[#333] p-3 rounded-lg w-fit">Next: Watch Episode ${epNum + 1} <i data-lucide="arrow-right" class="w-4 h-4"></i></a>` : ''}
+                ${(activeIndex > 0) ? `<a href="/${slug}/episode-${epNum - 1}" onclick="route(event)" class="text-gray-500 hover:text-white text-xs flex items-center gap-1"><i data-lucide="arrow-left" class="w-3 h-3"></i> Previous Episode</a>` : ''}
+            </div>`;
+        }
+
+        const viewKey = isSeries ? `ep_${activeIndex}` : 'full_movie';
+        incrementViewSafe(isSeries ? 'series' : 'movies', item.id, viewKey);
+        
+        let videoSrc = (item.type === 'movie') ? item.movieUrl : (item.episodes?.length ? item.episodes[activeIndex].url : "");
+        const suggestions = allContent.filter(i => i.id !== item.id).slice(0, 10);
 
         let html = `
         <div class="max-w-[1800px] mx-auto lg:px-6 py-6">
-            <div class="px-4 lg:px-0 text-sm text-gray-400 mb-4 flex items-center gap-2"><a href="/" onclick="route(event)" class="hover:text-white">Home</a> / <span class="text-brand">18+ Content</span></div>
+            <div class="px-4 lg:px-0 text-sm text-gray-400 mb-4 flex items-center gap-2"><a href="/" onclick="route(event)" class="hover:text-white">Home</a> / ${isSeries ? `<a href="/${slug}" onclick="route(event)" class="hover:text-white">${item.name}</a> / <span class="text-brand">Ep ${activeIndex+1}</span>` : `<span class="text-brand">${item.name}</span>`}</div>
             <div class="flex flex-col lg:flex-row gap-8">
                 <div class="w-full lg:w-[75%]">
                     <div id="player-ad-top" class="ad-slot"></div>
                     <div class="relative bg-black rounded-xl overflow-hidden shadow-2xl border border-[#262626]"><div class="aspect-video w-full relative z-10"><video id="main-video" controls class="w-full h-full" controlsList="nodownload" src="${videoSrc}" autoplay playsinline></video></div></div>
                     <div class="mt-6 animate-fade px-4 lg:px-0">
-                        <h1 class="text-2xl md:text-3xl font-bold text-white leading-tight mb-2">${item.name} ${isSeries ? `<span class="text-brand font-normal">Ep ${activeIndex + 1}</span>` : ''}</h1>
-                        <div class="flex items-center gap-4 text-sm text-gray-400 mb-6"><span class="bg-red-600 px-2 py-1 rounded text-xs text-white">18+</span><span>${isSeries ? 'Series' : 'Movie'}</span></div>
+                        <h1 class="text-2xl md:text-3xl font-bold text-white leading-tight mb-2">${item.name} ${isSeries ? `<span class="text-brand font-normal">Episode ${activeIndex + 1}</span>` : ''}</h1>
+                        <div class="flex items-center gap-4 text-sm text-gray-400 mb-6"><span class="bg-[#262626] px-2 py-1 rounded text-xs text-white">HD</span><span>${isSeries ? 'Web Series' : 'Movie'}</span></div>
+                        <div class="mb-8 p-5 bg-[#111] rounded-xl border border-[#262626] animate-fade">
+                            <h2 class="text-white font-semibold mb-3 text-lg flex items-center gap-2"><i data-lucide="book-open" class="w-5 h-5 text-brand"></i> Storyline</h2>
+                            <article class="text-gray-300 text-sm leading-7 mb-5 font-light"><p class="mb-3">${metaDesc}</p></article>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                ${tags.map(tag => `<a href="/" onclick="event.preventDefault(); window.history.pushState({}, '', '/'); document.getElementById('desktop-search').value='${tag}'; handleSearch('${tag}'); window.scrollTo({top: 0, behavior: 'smooth'});" class="px-3 py-1 bg-[#1a1a1a] border border-[#333] rounded-md text-[11px] text-gray-400 hover:text-white hover:border-brand hover:bg-[#222] transition">#${tag.replace(/\s+/g, '')}</a>`).join('')}
+                            </div>
+                            ${internalLinksHtml}
+                        </div>
                         <div id="player-ad-bot" class="ad-slot"></div>
-                        ${isSeries ? `<div class="mt-8 bg-[#141414] border border-[#262626] rounded-xl p-6"><div class="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-2">${item.episodes.map((ep, idx) => `<a href="/${slug}/episode-${idx+1}" onclick="route(event)" class="ep-btn ${idx === activeIndex ? 'active' : ''}">${idx + 1}</a>`).join('')}</div></div>` : ''}
+                        ${isSeries ? `<div class="mt-8 bg-[#141414] border border-[#262626] rounded-xl p-6"><div class="flex justify-between items-center mb-4"><h3 class="text-white font-semibold flex items-center gap-2"><i data-lucide="layers" class="w-5 h-5 text-brand"></i> Episodes</h3><a href="/${slug}" onclick="route(event)" class="text-xs text-gray-400 hover:text-white">View Info</a></div><div class="grid grid-cols-5 sm:grid-cols-6 md:grid-cols-8 lg:grid-cols-10 gap-2">${item.episodes.map((ep, idx) => `<a href="/${slug}/episode-${idx+1}" onclick="route(event)" class="ep-btn ${idx === activeIndex ? 'active' : ''}">${idx + 1}</a>`).join('')}</div></div>` : ''}
                     </div>
                 </div>
                 <div class="w-full lg:w-[25%] px-4 lg:px-0">
-                    <h3 class="font-bold text-white text-lg mb-4 pl-2 border-l-4 border-brand">More 18+</h3>
-                    <div class="flex flex-col gap-4">${allContent.slice(0, 10).map(s => `<a href="/${createSlug(s.name)}" onclick="route(event)" class="flex gap-3 bg-[#141414] p-2 rounded"><div class="w-28 aspect-video bg-[#222] rounded overflow-hidden"><img src="${s.imageUrl}" class="w-full h-full object-cover"></div><div class="py-1"><h4 class="text-sm font-semibold text-gray-200 line-clamp-2">${s.name}</h4><p class="text-[10px] text-red-500 mt-1">18+ ${s.type}</p></div></a>`).join('')}</div>
+                    <h3 class="font-bold text-white text-lg mb-4 pl-2 border-l-4 border-brand">Recommended</h3>
+                    <div class="flex flex-col gap-4">
+                        ${suggestions.map(s => `<a href="/${createSlug(s.name)}" onclick="route(event)" class="flex gap-3 group bg-[#141414] hover:bg-[#1a1a1a] p-2 rounded-lg transition border border-transparent hover:border-[#333]"><div class="w-28 aspect-video bg-[#222] rounded overflow-hidden flex-shrink-0 relative"><img src="${s.imageUrl}" class="w-full h-full object-cover group-hover:scale-105 transition" loading="lazy"></div><div class="py-1 min-w-0 flex flex-col justify-center"><h4 class="text-sm font-semibold text-gray-200 line-clamp-2 group-hover:text-brand transition leading-snug">${s.name}</h4><p class="text-[11px] text-gray-500 mt-1 flex items-center gap-1"><i data-lucide="${s.type === 'series' ? 'tv' : 'film'}" class="w-3 h-3"></i> ${s.type === 'series' ? 'Series' : 'Movie'}</p></div></a>`).join('')}
+                    </div>
                 </div>
             </div>
-            <section class="seo-content-wrapper px-4 lg:px-8"><article id="seo-content">${getSeoContentHTML(item)}</article></section>
+            
+            <section class="seo-content-wrapper px-4 lg:px-8">
+                <article id="seo-content">${seoContentHTML}</article>
+            </section>
+            
         </div>${getFooter()}`;
 
         document.getElementById('app').innerHTML = html;
         lucide.createIcons();
         if(ads) { renderAd('player-ad-top', ads.playerHeader || ads.globalHeader); renderAd('player-ad-bot', ads.playerFooter || ads.globalFooter); }
+
+        trackPageActivity();
     }
 
-        window.openModal = (type) => {
+    window.openModal = (type) => {
         const titleEl = document.getElementById('modal-title');
         const bodyEl = document.getElementById('modal-body');
         const modal = document.getElementById('legal-modal');
-        
-        // Sidebar aur Overlay band karna (agar khula ho to)
         document.getElementById('sidebar').classList.add('-translate-x-full');
         document.getElementById('overlay').classList.add('hidden');
-
-        let title = "";
-        let content = "";
-
-        if (type === 'dmca') {
-            title = "DMCA & Disclaimer";
-            content = `
-                <div class="space-y-4">
-                    <div>
-                        <h3 class="text-white font-bold text-lg mb-1">Copyright Disclaimer</h3>
-                        <p>Ranginx is an online video search engine. We do not host, upload, or store any video files on our servers. All content is provided by non-affiliated third parties.</p>
-                    </div>
-                    <div>
-                        <h3 class="text-white font-bold text-lg mb-1">DMCA Notice</h3>
-                        <p>We take copyright violation seriously. If you are a copyright owner and want your content removed, please contact us properly.</p>
-                    </div>
-                    <div class="bg-[#222] p-3 rounded border border-[#333]">
-                        <p class="text-sm text-gray-400">Contact for Takedown:</p>
-                        <p class="text-brand font-bold">admin@ranginx.fun</p>
-                    </div>
-                </div>
-            `;
-        } else {
-            // Privacy Policy for 18+
-            title = "Privacy Policy (18+)";
-            content = `
-                <div class="space-y-4">
-                    <div>
-                        <h3 class="text-white font-bold text-lg mb-1">Adult Content Warning</h3>
-                        <p>This website contains explicit material intended for adults (18+). By using this site, you confirm that you are of legal age in your jurisdiction.</p>
-                    </div>
-                    <div>
-                        <h3 class="text-white font-bold text-lg mb-1">Cookies & Ads</h3>
-                        <p>We use third-party advertising companies to serve ads. These companies may use cookies to show ads based on your visits. We do not personally track your real-life identity.</p>
-                    </div>
-                    <div>
-                        <h3 class="text-white font-bold text-lg mb-1">Data Safety</h3>
-                        <p>We do not sell your personal data. Your browsing activity is used solely for analytics and improving website performance.</p>
-                    </div>
-                </div>
-            `;
-        }
-
-        if(titleEl) titleEl.innerText = title;
-        if(bodyEl) bodyEl.innerHTML = content;
-        
-        modal.classList.remove('hidden'); 
-        modal.classList.add('flex');
+        let content = (type === 'dmca') ? `<p class="mb-2"><strong>Copyright Disclaimer</strong></p><p>Ranginx operates as a search engine for media content. We do not host, upload, or store any files on our servers.</p><p class="mt-4 text-xs text-gray-500">Contact: admin@ranginx.fun</p>` : `<p>We prioritize your privacy. Cookies are used strictly for site functionality and analytics.</p>`;
+        if(type === 'dmca') titleEl.innerText = "DMCA Notice"; else titleEl.innerText = "Privacy Policy";
+        bodyEl.innerHTML = content;
+        modal.classList.remove('hidden'); modal.classList.add('flex');
     };
     window.closeModal = () => { document.getElementById('legal-modal').classList.add('hidden'); document.getElementById('legal-modal').classList.remove('flex'); };
-    async function loadAds() { try { const snap = await getDoc(doc(db, 'settings', 'ads')); if(snap.exists()) ads = snap.data(); } catch(e){} }
-    function renderAd(id, code) { const el = document.getElementById(id); if(!el || !code) return; el.classList.add('active'); el.innerHTML = code.includes('<script') ? '' : code; if(code.includes('<script')) { const f = document.createElement('iframe'); f.style.cssText="width:100%;height:100%;border:none;min-height:90px;"; el.appendChild(f); f.contentWindow.document.write(`<body>${code}</body>`); } }
 
-    function getFooter() { return `<footer class="bg-[#050505] border-t border-[#1a1a1a] pt-16 pb-10 mt-12"><div class="text-center text-[11px] text-[#444]">&copy; 2025 Ranginx 18+. All rights reserved.</div></footer>`; }
+    async function loadAds() { try { const snap = await getDoc(doc(db, 'settings', 'ads')); if(snap.exists()) ads = snap.data(); } catch(e){} }
+    function renderAd(id, code) {
+        const el = document.getElementById(id); if(!el) return;
+        if(!code || code.trim() === "") { el.classList.remove('active'); return; }
+        el.classList.add('active');
+        if(code.includes('<script')) {
+            el.innerHTML = ''; const f = document.createElement('iframe');
+            f.style.cssText = "width:100%;height:100%;border:none;overflow:hidden;min-height:90px;";
+            el.appendChild(f);
+            f.contentWindow.document.write(`<body style="margin:0;padding:0;display:flex;justify-content:center;align-items:center;background:transparent;overflow:hidden;">${code}</body>`);
+        } else el.innerHTML = code;
+    }
+    
+    function getFooter() {
+        return `
+        <footer class="bg-[#050505] border-t border-[#1a1a1a] pt-16 pb-10 mt-12">
+            <div class="max-w-[1400px] mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-10">
+                <div class="col-span-2 md:col-span-1"><h3 class="text-white font-bold text-xl mb-4 tracking-tight">Ranginx</h3><p class="text-gray-500 text-sm leading-relaxed">The best place to watch movies and web series for free in HD quality. No registration required.</p></div>
+                <div><h4 class="text-white font-semibold text-sm mb-4 uppercase tracking-wider">Browse</h4><a href="/movies" onclick="route(event)" class="footer-link">Movies</a><a href="/series" onclick="route(event)" class="footer-link">Web Series</a></div>
+                <div><h4 class="text-white font-semibold text-sm mb-4 uppercase tracking-wider">Support</h4><button onclick="openModal('dmca')" class="footer-link text-left w-full">DMCA</button><button onclick="openModal('privacy')" class="footer-link text-left w-full">Privacy Policy</button></div>
+            </div>
+            <div class="text-center pt-8 border-t border-[#1a1a1a] mt-10 text-[11px] text-[#444]">&copy; 2025 Ranginx. All rights reserved.</div>
+        </footer>
+    `;
+    }
+
     function createSlug(name) { return name.toLowerCase().trim().replace(/[^a-z0-9]+/g, '-'); }
     window.toggleSidebar = () => { const sb = document.getElementById('sidebar'); document.getElementById('overlay').classList.toggle('hidden'); sb.classList.toggle('-translate-x-full'); };
     document.getElementById('menu-btn').onclick = toggleSidebar;
-    window.handleSearch = (val) => { if(!val) return; const v = val.toLowerCase().trim(); const filtered = allContent.filter(i => i.name.toLowerCase().includes(v)); const temp = [...allContent]; allContent = filtered; renderHome(); allContent = temp; document.getElementById('mobile-search').classList.add('hidden'); };
+    
+    // Search Logic
+    window.handleSearch = (val) => { 
+        if(!val) return; 
+        const v = val.toLowerCase().trim();
+        if(v.includes('web series') || v === 'series') { renderHome('series'); return; }
+        if(v.includes('movie') || v.includes('bollywood')) { renderHome('movie'); return; }
+        if(v === 'hd' || v === 'free streaming' || v === 'watch online' || v === 'ranginx') { renderHome(); return; }
+        const filtered = allContent.filter(i => i.name.toLowerCase().includes(v)); 
+        const temp = [...allContent]; 
+        allContent = filtered; 
+        renderHome(); 
+        allContent = temp; 
+        document.getElementById('mobile-search').classList.add('hidden'); 
+    };
     document.getElementById('desktop-search').addEventListener('keyup', (e) => { if (e.key === 'Enter') handleSearch(e.target.value) });
 
     init();
