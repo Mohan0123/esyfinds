@@ -209,6 +209,9 @@
     let trackStartTime = Date.now();
     
     async function trackPageActivity() {
+const PAGE_TYPE = window.location.pathname.includes('index.html')
+  ? 'adult'
+  : 'normal';
         if (!isAnalyticsSafe()) return;
         const now = new Date();
         const dateStr = now.toISOString().split('T')[0];
@@ -262,21 +265,24 @@
                 setDoc(doc(db, "pageStats", newId), { 
                     views: increment(1), 
                     lastVisit: serverTimestamp(),
-                    title: pageTitle 
+                    title: pageTitle,
+                    pageType: PAGE_TYPE, 
                 }, { merge: true });
 
                 setDoc(doc(db, "pageStatsDaily", `${dateStr}_${newId}`), { 
                     pageId: newId, 
                     date: dateStr, 
                     views: increment(1),
-                    title: pageTitle 
+                    title: pageTitle,
+                    pageType: PAGE_TYPE,
                 }, { merge: true });
 
                 setDoc(doc(db, "pageStatsMonthly", `${monthStr}_${newId}`), { 
                     pageId: newId, 
                     month: monthStr, 
                     views: increment(1),
-                    title: pageTitle 
+                    title: pageTitle,
+                    pageType: PAGE_TYPE,
                 }, { merge: true });
             } catch (e) {}
         }
