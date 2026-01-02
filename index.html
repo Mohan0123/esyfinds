@@ -3,42 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self' https://*.google.com https://*.googlebot.com;">
+    <meta http-equiv="Content-Security-Policy" content="frame-ancestors 'self';">
     <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
-    
     <title>Ranginx – Watch 18+ Web Series & Movies Online</title>
-    <meta name="description" content="Browse and watch movies and web series online on Ranginx.">
-    
-    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="description" content="Watch latest HD web series and movies online. Free streaming on Ranginx.">
+    <meta name="robots" content="index, follow">
     
     <meta name="rating" content="RTA-5042-1996-1400-1577-RTA" />
     <meta name="adult" content="true" />
 
     <meta property="og:site_name" content="Ranginx">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Ranginx Platform">
-    <meta property="og:description" content="Stream movies and series.">
+    <meta property="og:title" content="Ranginx - Premium Streaming">
+    <meta property="og:description" content="Watch latest HD web series and movies online. Free streaming on Ranginx.">
     <meta property="og:image" content="https://ranginx.fun/og-image.jpg">
+    <meta property="og:url" content="https://ranginx.fun/">
     
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Ranginx Platform">
-    <meta name="twitter:description" content="Stream movies and series.">
+    <meta name="twitter:title" content="Ranginx - Premium Streaming">
+    <meta name="twitter:description" content="Watch latest HD web series and movies online. Free streaming on Ranginx.">
     
-    <link rel="canonical" href="https://ranginx.fun/" />
     <script type="application/ld+json" id="schema-json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
     {
-      "@context": "https://schema.org",
       "@type": "WebSite",
       "name": "Ranginx",
+      "alternateName": "Ranginx Streaming",
       "url": "https://ranginx.fun/",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://ranginx.fun/?search={search_term_string}",
-        "query-input": "required name=search_term_string"
+      "description": "Watch latest 18+ web series and movies online in HD quality.",
+      "inLanguage": "en",
+      "isFamilyFriendly": false
+    },
+    {
+      "@type": "Organization",
+      "name": "Ranginx",
+      "url": "https://ranginx.fun/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://ranginx.fun/logo.png"
       }
     }
-    </script>
+  ]
+}
+</script>
 
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -91,6 +102,7 @@
         .footer-link { cursor: pointer; color: #888; font-size: 14px; margin-bottom: 8px; display: block; transition: 0.2s; }
         .footer-link:hover { color: #e50914; }
         
+        /* --- SEO CONTENT BLOCK STYLING --- */
         .seo-content-wrapper {
             max-width: 1600px;
             margin: 0 auto;
@@ -158,9 +170,11 @@
 </div>
 
 <noscript>
-    <div style="padding: 20px; text-align: center; color: #fff; background: #000;">
-        <h1>Ranginx</h1>
-        <p>Streaming Platform.</p>
+    <div style="padding: 20px; max-width: 800px; margin: 0 auto; color: #e5e5e5; font-family: sans-serif;">
+        <h1 style="color: #e50914;">Watch Free Web Series & Movies Online - Ranginx</h1>
+        <p>Ranginx is a premium streaming platform offering the latest HD web series and movies. Browse our extensive catalog of 18+ web series, Bollywood movies, and trending episodes without registration.</p>
+        <h2>Popular Categories</h2>
+        <ul><li><a href="/movies" style="color: #fff;">HD Movies</a></li><li><a href="/series" style="color: #fff;">Web Series</a></li></ul>
     </div>
 </noscript>
 
@@ -179,10 +193,10 @@
         appId: "1:497431501409:web:0e03fb6744c24e119c2820"
     }));
 
-    let allContent = []; // Shows Safe Content
-    let restrictedContent = []; // Stores Adult Content for Redirect Logic
+    let allContent = [];
     let ads = {};
 
+    // --- ADSENSE SAFE & ANALYTICS RULES ---
     function isAnalyticsSafe() {
         const userAgent = navigator.userAgent.toLowerCase();
         const path = location.pathname;
@@ -205,21 +219,22 @@
         } catch (e) { }
     }
 
+    // --- TRACKING MODULE ---
     let currentTrackId = null;
     let trackStartTime = Date.now();
     
     async function trackPageActivity() {
-const PAGE_TYPE = window.location.pathname.includes('index.html')
-  ? 'adult'
-  : 'normal';
         if (!isAnalyticsSafe()) return;
+
         const now = new Date();
         const dateStr = now.toISOString().split('T')[0];
         const monthStr = dateStr.slice(0, 7);
 
+        // Previous page time calculation
         if (currentTrackId) {
             const timeSpentMs = Date.now() - trackStartTime;
             const timeSpentSeconds = Math.round(timeSpentMs / 1000);
+
             if (timeSpentSeconds >= 3 && timeSpentSeconds <= 3600) {
                 const validTimeMs = timeSpentSeconds * 1000; 
                 try {
@@ -265,24 +280,21 @@ const PAGE_TYPE = window.location.pathname.includes('index.html')
                 setDoc(doc(db, "pageStats", newId), { 
                     views: increment(1), 
                     lastVisit: serverTimestamp(),
-                    title: pageTitle,
-                    pageType: PAGE_TYPE, 
+                    title: pageTitle 
                 }, { merge: true });
 
                 setDoc(doc(db, "pageStatsDaily", `${dateStr}_${newId}`), { 
                     pageId: newId, 
                     date: dateStr, 
                     views: increment(1),
-                    title: pageTitle,
-                    pageType: PAGE_TYPE,
+                    title: pageTitle 
                 }, { merge: true });
 
                 setDoc(doc(db, "pageStatsMonthly", `${monthStr}_${newId}`), { 
                     pageId: newId, 
                     month: monthStr, 
                     views: increment(1),
-                    title: pageTitle,
-                    pageType: PAGE_TYPE,
+                    title: pageTitle 
                 }, { merge: true });
             } catch (e) {}
         }
@@ -294,10 +306,13 @@ const PAGE_TYPE = window.location.pathname.includes('index.html')
     window.addEventListener("beforeunload", () => {
         if (currentTrackId && isAnalyticsSafe()) {
             const timeSpentSeconds = Math.round((Date.now() - trackStartTime) / 1000);
-            if (timeSpentSeconds >= 3 && timeSpentSeconds <= 3600) { }
+            if (timeSpentSeconds >= 3 && timeSpentSeconds <= 3600) {
+                 // Best effort handling
+            }
         }
     });
 
+    // --- SEO UPDATER ---
     function updateSEO(meta) {
         document.title = meta.title;
 
@@ -307,7 +322,7 @@ const PAGE_TYPE = window.location.pathname.includes('index.html')
 
         let robotsMeta = document.querySelector('meta[name="robots"]');
         if (!robotsMeta) { robotsMeta = document.createElement('meta'); robotsMeta.setAttribute('name', 'robots'); document.head.appendChild(robotsMeta); }
-        robotsMeta.setAttribute("content", meta.robots || "index, follow, max-image-preview:large");
+        robotsMeta.setAttribute("content", meta.robots || "index, follow");
 
         let kwMeta = document.querySelector('meta[name="keywords"]');
         if (meta.keywords && meta.keywords.length > 0) {
@@ -315,15 +330,13 @@ const PAGE_TYPE = window.location.pathname.includes('index.html')
             kwMeta.setAttribute("content", Array.isArray(meta.keywords) ? meta.keywords.join(', ') : meta.keywords);
         } else if (kwMeta) kwMeta.remove();
 
-        let cleanUrl = meta.url || `https://ranginx.fun${window.location.pathname}`;
-        cleanUrl = cleanUrl.split('?')[0].split('#')[0];
-        if (cleanUrl.length > 20 && cleanUrl.endsWith('/')) {
-            cleanUrl = cleanUrl.slice(0, -1);
-        }
-
+        // FIX: Correct Canonical Logic (removes extra slashes)
+        let canonicalUrl = meta.url || `https://ranginx.fun${window.location.pathname}`;
+        if (canonicalUrl.endsWith('/') && canonicalUrl !== 'https://ranginx.fun/') canonicalUrl = canonicalUrl.slice(0, -1);
+        
         let linkCanon = document.querySelector('link[rel="canonical"]');
         if(!linkCanon) { linkCanon = document.createElement('link'); linkCanon.setAttribute('rel', 'canonical'); document.head.appendChild(linkCanon); }
-        linkCanon.setAttribute("href", cleanUrl);
+        linkCanon.setAttribute("href", canonicalUrl);
 
         const setMeta = (selector, attr, value) => {
             let el = document.querySelector(selector);
@@ -333,7 +346,7 @@ const PAGE_TYPE = window.location.pathname.includes('index.html')
 
         setMeta('meta[property="og:title"]', 'content', meta.title);
         setMeta('meta[property="og:description"]', 'content', meta.desc);
-        setMeta('meta[property="og:url"]', 'content', cleanUrl);
+        setMeta('meta[property="og:url"]', 'content', canonicalUrl);
         setMeta('meta[property="og:type"]', 'content', meta.ogType || "website");
         if (meta.image) setMeta('meta[property="og:image"]', 'content', meta.image);
         
@@ -341,10 +354,7 @@ const PAGE_TYPE = window.location.pathname.includes('index.html')
         setMeta('meta[name="twitter:description"]', 'content', meta.desc);
         if (meta.image) setMeta('meta[name="twitter:image"]', 'content', meta.image);
 
-        const schemaData = { 
-            "@context": "https://schema.org", 
-            "@graph": Array.isArray(meta.schema) ? meta.schema : (meta.schema ? [meta.schema] : [])
-        };
+        const schemaData = { "@context": "https://schema.org", "@graph": [ { "@type": "WebSite", "name": "Ranginx", "url": "https://ranginx.fun/" }, ...(Array.isArray(meta.schema) ? meta.schema : (meta.schema ? [meta.schema] : [])) ] };
         document.getElementById('schema-json').textContent = JSON.stringify(schemaData);
     }
 
@@ -369,7 +379,10 @@ const PAGE_TYPE = window.location.pathname.includes('index.html')
     window.route = (event) => { event = event || window.event; event.preventDefault(); window.history.pushState({}, "", event.currentTarget.href); handleLocation(); };
     window.onpopstate = handleLocation;
 
+    // --- MAIN ROUTING LOGIC (PERFECTED) ---
     async function handleLocation() {
+        // FIX: Removed trackPageActivity() from here to prevent early tracking bug
+        
         const path = window.location.pathname;
         const parts = path.split('/').filter(p => p);
         
@@ -381,38 +394,34 @@ const PAGE_TYPE = window.location.pathname.includes('index.html')
             window.history.replaceState({}, "", window.location.pathname.slice(0, -1));
         }
 
+        // STEP 1: Check Home
         if (parts.length === 0 || path === '/index.html' || path === '/') { renderHome(); return; }
+        
+        // STEP 2: Check Static Routes
         if (parts[0] === 'movies') { renderHome('movie'); return; }
         if (parts[0] === 'series') { renderHome('series'); return; }
 
+        // STEP 3: Find Item
         const slug = parts[0];
-        
-        // 1. Check in NORMAL (Safe) Content
         const item = allContent.find(i => createSlug(i.name) === slug);
 
-        if (item) {
-            // Found in Normal -> Render
-            if (item.type === 'series') {
-                if (parts.length === 1) renderSeriesLanding(slug);
-                else if (parts.length === 2 && parts[1].startsWith('episode-')) {
-                    const epNum = parseInt(parts[1].replace('episode-', ''));
-                    if (Number.isInteger(epNum) && epNum > 0 && item.episodes && epNum <= item.episodes.length) renderPlayer(slug, epNum - 1);
-                    else { window.history.replaceState({}, "", `/${slug}`); renderSeriesLanding(slug); }
-                } else { window.history.replaceState({}, "", `/${slug}`); renderSeriesLanding(slug); }
-            } else {
-                renderPlayer(slug, 0);
-            }
+        // STEP 4: 404 CHECK (FIX: Renders 404 page instead of Home)
+        if (!item) { 
+            render404(); 
+            // Note: render404 does NOT call trackPageActivity, effectively ignoring junk pages.
+            return; 
+        }
+
+        // STEP 5: Render Content
+        if (item.type === 'series') {
+            if (parts.length === 1) renderSeriesLanding(slug);
+            else if (parts.length === 2 && parts[1].startsWith('episode-')) {
+                const epNum = parseInt(parts[1].replace('episode-', ''));
+                if (Number.isInteger(epNum) && epNum > 0 && item.episodes && epNum <= item.episodes.length) renderPlayer(slug, epNum - 1);
+                else { window.history.replaceState({}, "", `/${slug}`); renderSeriesLanding(slug); }
+            } else { window.history.replaceState({}, "", `/${slug}`); renderSeriesLanding(slug); }
         } else {
-            // 2. SAFETY CHECK: Is this an ADULT slug?
-            const adultItem = restrictedContent.find(i => createSlug(i.name) === slug);
-            
-            if (adultItem) {
-                // Yes, it is 18+ content. User is on normal site.
-                // Redirect to 18plus.html
-                window.location.href = `https://ranginx.fun/18plus.html${path}`;
-            } else {
-                render404(); 
-            }
+            renderPlayer(slug, 0);
         }
     }
 
@@ -422,27 +431,21 @@ const PAGE_TYPE = window.location.pathname.includes('index.html')
         loadAds();
         document.getElementById('app').innerHTML = getSkeleton();
         try {
-            // Fetch EVERYTHING (Movies + Series)
+            // FIX: Removed 'limit(50)' so ALL movies load. No more 404s for older posts.
             const [m, s] = await Promise.all([
                 getDocs(query(collection(db, 'movies'), where('isPublic', '==', true))),
                 getDocs(query(collection(db, 'series'), where('isPublic', '==', true)))
             ]);
-
-            const rawMovies = m.docs.map(d => ({id:d.id, ...d.data(), type:'movie'}));
-            const rawSeries = s.docs.map(d => ({id:d.id, ...d.data(), type:'series'}));
-            const fullList = [...rawMovies, ...rawSeries];
-
-            // SEPARATION LOGIC
-            // 1. Display Content (Normal Only)
-            allContent = fullList.filter(i => i.isAdult !== true).sort(()=> 0.5 - Math.random());
-            
-            // 2. Restricted Content (Adult Only - used for Redirects)
-            restrictedContent = fullList.filter(i => i.isAdult === true);
+            allContent = [
+                ...m.docs.map(d => ({id:d.id, ...d.data(), type:'movie'})), 
+                ...s.docs.map(d => ({id:d.id, ...d.data(), type:'series'}))
+            ].sort(()=> 0.5 - Math.random());
             
             handleLocation();
         } catch(e) { console.error(e); }
     }
 
+    // --- NEW 404 RENDER FUNCTION (ADDED) ---
     function render404() {
         updateSEO({ 
             title: "Page Not Found - Ranginx", 
@@ -465,7 +468,7 @@ const PAGE_TYPE = window.location.pathname.includes('index.html')
     function renderHome(filterType = null) {
         updateSEO({ 
             title: "Ranginx - Watch Latest Web Series & Movies", 
-            desc: "Premium streaming destination for web series and HD movies.",
+            desc: "Premium streaming destination for 18+ web series and HD movies.",
             keywords: null, 
             robots: "index, follow", 
             schema: { "@type": "WebSite", "name": "Ranginx", "url": "https://ranginx.fun/" }
@@ -531,6 +534,7 @@ const PAGE_TYPE = window.location.pathname.includes('index.html')
         lucide.createIcons();
         setTimeout(() => { if(ads.globalFooter) for(let i=0; i<adCount; i++) renderAd(`feed-ad-${i}`, ads.globalFooter); }, 500);
 
+        // FIX: Track activity ONLY after Home page is successfully rendered
         trackPageActivity();
     }
 
@@ -542,7 +546,7 @@ const PAGE_TYPE = window.location.pathname.includes('index.html')
         
         const pageTitle = (item.seoTitle && item.seoTitle.trim() !== "") 
             ? item.seoTitle 
-            : `${item.name} Web Series Watch Online | Ranginx`;
+            : `${item.name} Web Series (18+) Watch Online | Ranginx`;
             
         const pageDesc = (item.seoDescription && item.seoDescription.trim() !== "")
             ? item.seoDescription
@@ -603,6 +607,8 @@ const PAGE_TYPE = window.location.pathname.includes('index.html')
             </div>${getFooter()}`;
         document.getElementById('app').innerHTML = html;
         lucide.createIcons();
+
+        // FIX: Track activity ONLY after Series Landing page is successfully rendered
         trackPageActivity();
     }
 
@@ -628,10 +634,10 @@ const PAGE_TYPE = window.location.pathname.includes('index.html')
             const engText = `Watch ${item.name} Episode ${epNum} online in HD quality on Ranginx.`;
             const hindiText = `Ranginx par aap ${item.name} web series ke sabhi episodes free dekh sakte hain.`;
             metaDesc = `${engText} ${hindiText}`.substring(0, 160);
-            tags = [item.name, 'Ranginx', 'Watch Online', 'HD', 'Web Series'];
+            tags = [item.name, 'Ranginx', 'Watch Online', 'HD', '18+ Web Series'];
         }
 
-        const pageTitle = isSeries ? `${item.name} Episode ${epNum} Watch Online | Ranginx` : `${item.name} Watch Online | Ranginx`;
+        const pageTitle = isSeries ? `${item.name} Episode ${epNum} (18+) Watch Online | Ranginx` : `${item.name} (18+) Watch Online | Ranginx`;
         const canonicalUrl = isSeries ? `https://ranginx.fun/${slug}/episode-${epNum}` : `https://ranginx.fun/${slug}`;
         const robotsStatus = item.seoIndex === false ? "noindex, nofollow" : "index, follow";
 
@@ -710,6 +716,7 @@ const PAGE_TYPE = window.location.pathname.includes('index.html')
         lucide.createIcons();
         if(ads) { renderAd('player-ad-top', ads.playerHeader || ads.globalHeader); renderAd('player-ad-bot', ads.playerFooter || ads.globalFooter); }
 
+        // FIX: Track activity ONLY after Player is successfully rendered
         trackPageActivity();
     }
 
